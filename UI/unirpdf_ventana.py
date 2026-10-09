@@ -9,28 +9,46 @@ QHBoxLayout
 from Services.unir_PDF import unir_PDFs
 
 def ventana_unirpdf():
+
+    archivos_seleccionados = []
     # de esta manera importamos de una manera mejor 
     ###########################################################################
     ###########################################################################
     def seleccionar_archivos():
 
-        global archivos_seleccionados
+        nonlocal archivos_seleccionados
 
-        archivos_seleccionados, _ = QFileDialog.getOpenFileNames(
+        archivos, _ = QFileDialog.getOpenFileNames(
         ventana,
         "Seleccionar PDF",
         "",
         "PDF Files (*.pdf)"
         )
 
+        if not archivos:
+            return
+
+        if len(archivos) < 2:
+
+            etiqueta.setText("debes cargar al menos 2 archivos para poder unir ")
+            return
+
+
+        archivos_seleccionados = archivos
+        
+
         print(archivos_seleccionados)
         etiqueta.setText(f"Archivos cargados: {len(archivos_seleccionados)}" )
 
     def procesando():
 
-        etiqueta.setText("Procesando PDFs...")
+        if not archivos_seleccionados:
 
-        
+            etiqueta.setText(
+                "Debes seleccionar al menos 2 PDFs"
+            )
+
+            return
 
         ruta_salida, _ = QFileDialog.getSaveFileName(
             ventana,

@@ -1,6 +1,5 @@
 from pypdf import PdfWriter # crear
 from pypdf import PdfReader
-import os # leer
 # exportamos la librerias correspondinetes 
 
 def dividir_PDFs(
@@ -33,7 +32,7 @@ ruta_salida
         reader.pages[pagina]
         )
 
-        with open(ruta_salida, "wb") as salida:
-            writer.write(salida)
-            print("PDF generado correctamente")
+    with open(ruta_salida, "wb") as salida:
+        writer.write(salida)
+        print("PDF generado correctamente")
 
