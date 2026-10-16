@@ -69,7 +69,7 @@ def desbloqueo_ventana():
         ruta_salida, _ = QFileDialog.getSaveFileName(
         ventana,
         "Guardar PDF",
-        "PDF_Desbloqueado.pdf",
+        "PDF_bloqueado.pdf",
         "PDF Files (*.pdf)")
          
         if not ruta_salida:
