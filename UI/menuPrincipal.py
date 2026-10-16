@@ -16,6 +16,7 @@ from UI.desbloqueo_ventana import desbloqueo_ventana
 from UI.bloqueo_ventana import bloqueo_ventana
 from UI.convertirjpg_ventana import funcion_convertirJPG
 from UI.convertirword_ventana import convertirword_ventana
+from UI.convertirw_pventana import convertirword_pdf_ventana
 
 ventana_hija = None
 ventana_hija2 = None
@@ -23,6 +24,8 @@ ventana_hija3 = None
 ventana_hija4 = None
 ventana_hija5 = None
 ventana_hija6 = None
+ventana_hija7 = None
+
 
 def abrir_unir():
     global ventana_hija
@@ -66,6 +69,13 @@ def abrir_convertirword():
 
     ventana_hija6.show()
 
+def abrir_convertirw_p():
+    global ventana_hija7
+
+    ventana_hija7 = convertirword_pdf_ventana()
+
+    ventana_hija7.show()
+
 
 def menu_principal():
 
@@ -80,6 +90,7 @@ def menu_principal():
     btn_bloqueo = QPushButton("bloquear PDF")
     btn_convertir = QPushButton("convierte JPG->PDF")
     btn_convertirword = QPushButton("convertir PDF a Word")
+    btn_convertirw_p = QPushButton("convertir Word a PDF")
 
 
     btn_unir.clicked.connect(abrir_unir)
@@ -88,6 +99,8 @@ def menu_principal():
     btn_bloqueo.clicked.connect(abrir_bloqueo)
     btn_convertir.clicked.connect(abrir_convertir)
     btn_convertirword.clicked.connect(abrir_convertirword)
+    btn_convertirw_p.clicked.connect(abrir_convertirw_p)
+
 
     layout.addWidget(btn_unir)
     layout.addWidget(btn_dividir)
@@ -95,6 +108,7 @@ def menu_principal():
     layout.addWidget(btn_bloqueo)
     layout.addWidget(btn_convertir)
     layout.addWidget(btn_convertirword)
+    layout.addWidget(btn_convertirw_p)
     ventana.setLayout(layout)
 
     return ventana
