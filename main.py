@@ -1,4 +1,4 @@
-from UI.menuPrincipal import menu_principal
+from UI.menu_Principal import menu_principal
 import sys
 from PyQt6.QtWidgets import (
 QApplication

@@ -10,7 +10,7 @@ QLineEdit
 import os
 from pypdf import PdfWriter # crear
 from pypdf import PdfReader
-from Services.dividir_PDF import dividir_PDFs
+from Services.dividir_pdf import dividir_PDFs
 
 def dividirpdf_ventana():
     

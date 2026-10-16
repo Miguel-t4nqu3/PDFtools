@@ -6,7 +6,7 @@ QFileDialog,
 QVBoxLayout,
 QHBoxLayout
 )
-from Services.unir_PDF import unir_PDFs
+from Services.unir_pdf import unir_PDFs
 
 def ventana_unirpdf():
 
