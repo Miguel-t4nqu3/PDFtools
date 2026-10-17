@@ -9,7 +9,7 @@ QLineEdit
 )
 import os
 from pypdf import PdfReader
-from Services.desbloqueo_PDF import desbloquear_PDFs
+from Services.desbloquear_pdf import desbloquear_PDFs
 
 def desbloqueo_ventana():
 

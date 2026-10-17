@@ -8,7 +8,7 @@ QHBoxLayout,
 QLineEdit
 )
 import os
-from Services.convertirpdf_word import convertir_pdf_a_word
+from Services.convertir_pdf_a_word import convertir_pdf_a_word
 
 
 def convertirword_pdf_ventana():

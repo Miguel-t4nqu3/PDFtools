@@ -11,8 +11,8 @@ QLineEdit
 )
 import os
 from pypdf import PdfReader
-from Services.bloqueo_PDF import bloqueo_PDFs
-from Services.bloqueo_PDF import generar_contraseñas
+from Services.bloquear_pdf import bloqueo_PDFs
+from Services.bloquear_pdf import generar_contraseñas
 
 
 def bloqueo_ventana():

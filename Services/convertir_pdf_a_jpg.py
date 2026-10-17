@@ -1,7 +1,10 @@
 import pymupdf
+import os
 
 
-def convertir_pdf_a_jpg(archivo_seleccionado, ruta_salida):
+
+
+def convertir_pdf_a_jpg_backend(archivo_seleccionado, ruta_salida):
    
    try:
         pdf = pymupdf.open(archivo_seleccionado)
@@ -10,7 +13,9 @@ def convertir_pdf_a_jpg(archivo_seleccionado, ruta_salida):
 
             imagen = pagina.get_pixmap()
 
-            imagen.save(f"{ruta_salida}/pagina_{numero + 1}.jpg")
+            nombre_base = os.path.splitext(ruta_salida)[0]  # Obtener el nombre base sin extensión
+
+            imagen.save(f"{nombre_base}_{numero + 1}.jpg")
         print("se ha convertido el archivo correctamente")
         return True
 

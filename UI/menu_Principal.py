@@ -10,13 +10,15 @@ QHBoxLayout
 )
 
 # importamos las librerias necesarias 
-from UI.unirpdf_ventana import ventana_unirpdf
-from UI.dividirpdf_ventana import dividirpdf_ventana
-from UI.desbloqueo_ventana import desbloqueo_ventana
-from UI.bloqueo_ventana import bloqueo_ventana
-from UI.convertirjpg_ventana import funcion_convertirJPG
-from UI.convertirword_ventana import convertirword_ventana
-from UI.convertirw_pventana import convertirword_pdf_ventana
+from UI.unir_pdf_ventana import ventana_unirpdf
+from UI.dividir_pdf_ventana import dividirpdf_ventana
+from UI.desbloquear_pdf_ventana import desbloqueo_ventana
+from UI.bloquear_pdf_ventana import bloqueo_ventana
+from UI.convertir_jpg_a_pdf_ventana import funcion_convertirJPG
+from UI.convertir_word_a_pdf_ventana import convertirword_ventana
+from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
+from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
+from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 
 ventana_hija = None
 ventana_hija2 = None
@@ -25,6 +27,8 @@ ventana_hija4 = None
 ventana_hija5 = None
 ventana_hija6 = None
 ventana_hija7 = None
+ventana_hija8 = None
+ventana_hija9 = None
 
 
 def abrir_unir():
@@ -76,8 +80,23 @@ def abrir_convertirw_p():
 
     ventana_hija7.show()
 
+def abrir_convertir_pdf_a_jpg():
 
-def menu_principal():
+    global ventana_hija8
+
+    ventana_hija8 = ventana_convertirPDF_a_JPG()
+
+    ventana_hija8.show()
+
+def abrir_extraer_txt_digital():
+    global ventana_hija9
+
+    ventana_hija9 = extraer_txt_digital_ventana()
+
+    ventana_hija9.show()
+
+
+def menu_principal_ventana():
 
     ventana = QWidget()
     ventana.setWindowTitle("PDF Tools")
@@ -89,8 +108,10 @@ def menu_principal():
     btn_desbloqueo = QPushButton("desbloquear PDF")
     btn_bloqueo = QPushButton("bloquear PDF")
     btn_convertir = QPushButton("convierte JPG->PDF")
+    btn_convertir_pdf_a_jpg = QPushButton("convierte PDF->JPG")
     btn_convertirword = QPushButton("convertir PDF a Word")
     btn_convertirw_p = QPushButton("convertir Word a PDF")
+    btn_extraer_txt_digital = QPushButton("extraer texto de PDF digital")
 
 
     btn_unir.clicked.connect(abrir_unir)
@@ -100,7 +121,8 @@ def menu_principal():
     btn_convertir.clicked.connect(abrir_convertir)
     btn_convertirword.clicked.connect(abrir_convertirword)
     btn_convertirw_p.clicked.connect(abrir_convertirw_p)
-
+    btn_convertir_pdf_a_jpg.clicked.connect(abrir_convertir_pdf_a_jpg)
+    btn_extraer_txt_digital.clicked.connect(abrir_extraer_txt_digital)
 
     layout.addWidget(btn_unir)
     layout.addWidget(btn_dividir)
@@ -109,6 +131,8 @@ def menu_principal():
     layout.addWidget(btn_convertir)
     layout.addWidget(btn_convertirword)
     layout.addWidget(btn_convertirw_p)
+    layout.addWidget(btn_convertir_pdf_a_jpg)
+    layout.addWidget(btn_extraer_txt_digital)
     ventana.setLayout(layout)
 
     return ventana

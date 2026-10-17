@@ -9,7 +9,7 @@ QLineEdit
 )
 import os
 from pypdf import PdfReader
-from Services.convertirpdf_jpg import convertir_jpg_pdf
+from Services.convertir_jpg_a_pdf import convertir_jpg_pdf
 
 def funcion_convertirJPG():
 
