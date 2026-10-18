@@ -19,6 +19,7 @@ from UI.convertir_word_a_pdf_ventana import convertirword_ventana
 from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
 from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
+from UI.comprimir_pdf_ventana import ventana_compresion_pdf
 
 ventana_hija = None
 ventana_hija2 = None
@@ -29,6 +30,7 @@ ventana_hija6 = None
 ventana_hija7 = None
 ventana_hija8 = None
 ventana_hija9 = None
+ventana_hija10 = None
 
 
 def abrir_unir():
@@ -95,6 +97,13 @@ def abrir_extraer_txt_digital():
 
     ventana_hija9.show()
 
+def abrir_comprimir_pdf():
+    global ventana_hija10
+
+    ventana_hija10 = ventana_compresion_pdf()
+
+    ventana_hija10.show()
+
 
 def menu_principal_ventana():
 
@@ -112,6 +121,7 @@ def menu_principal_ventana():
     btn_convertirword = QPushButton("convertir PDF a Word")
     btn_convertirw_p = QPushButton("convertir Word a PDF")
     btn_extraer_txt_digital = QPushButton("extraer texto de PDF digital")
+    btn_comprimir_pdf = QPushButton("comprimir PDF")
 
 
     btn_unir.clicked.connect(abrir_unir)
@@ -123,6 +133,8 @@ def menu_principal_ventana():
     btn_convertirw_p.clicked.connect(abrir_convertirw_p)
     btn_convertir_pdf_a_jpg.clicked.connect(abrir_convertir_pdf_a_jpg)
     btn_extraer_txt_digital.clicked.connect(abrir_extraer_txt_digital)
+    btn_comprimir_pdf.clicked.connect(abrir_comprimir_pdf)
+
 
     layout.addWidget(btn_unir)
     layout.addWidget(btn_dividir)
@@ -133,6 +145,8 @@ def menu_principal_ventana():
     layout.addWidget(btn_convertirw_p)
     layout.addWidget(btn_convertir_pdf_a_jpg)
     layout.addWidget(btn_extraer_txt_digital)
+    layout.addWidget(btn_comprimir_pdf)
+    
     ventana.setLayout(layout)
 
     return ventana
