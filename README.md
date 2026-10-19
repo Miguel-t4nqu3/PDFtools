@@ -5,6 +5,8 @@ Aplicación de escritorio desarrollada en Python para la gestión, conversión y
 
 Versión 1.0 ✅
 
+menu_principal
+
 Características
 ✅ Unir archivos PDF
 
