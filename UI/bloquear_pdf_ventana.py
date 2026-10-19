@@ -13,7 +13,11 @@ import os
 from pypdf import PdfReader
 from Services.bloquear_pdf import bloqueo_PDFs
 from Services.bloquear_pdf import generar_contraseñas
-
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 
 def bloqueo_ventana():
 
@@ -72,7 +76,7 @@ def bloqueo_ventana():
         ruta_salida, _ = QFileDialog.getSaveFileName(
         ventana,
         "Guardar PDF",
-        "PDF_Desbloqueado.pdf",
+        "PDF_bloqueado.pdf",
         "PDF Files (*.pdf)")
          
         if not ruta_salida:
@@ -97,32 +101,39 @@ def bloqueo_ventana():
 
     #creamos una ventana 
 
-    ventana = QWidget()
-
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
     
 
-    ventana.setWindowTitle("PDF tools")
-    ventana.resize(500 , 300)
+    ventana = QWidget()
+    ventana.setStyleSheet(ESTILO_VENTANA)
+    ventana.setWindowTitle("PDF Tools")
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
 
-    titulo = QLabel(
-            "Bienvenido pdf tools",
-            ventana
-            )
+    titulo = QLabel("Bienvenido pdf tools",ventana)
+    titulo.setStyleSheet(ESTILO_TITULO)
     
     etiqueta = QLabel("selcciona pdf a bloquear")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
     etiqueta2 = QLabel("ingresa la contraseña que le colocaras al documento")
+    etiqueta2.setStyleSheet(ESTILO_ESTADO)
 
     seleccionar = QPushButton("selecciona")
+    seleccionar.setStyleSheet(ESTILO_BOTON)
+
     bloquear = QPushButton("bloquear")
+    bloquear.setStyleSheet(ESTILO_BOTON)
 
     password = QLineEdit()
+    password.setStyleSheet(ESTILO_BOTON)
 
     genera = QPushButton("genera contraseña aleatoria")
+    genera.setStyleSheet(ESTILO_BOTON)
 
     etiqueta_contraseña = QLabel("")
+    etiqueta_contraseña.setStyleSheet(ESTILO_ESTADO)
 
     password.setPlaceholderText("ingresar")
 

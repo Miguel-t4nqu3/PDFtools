@@ -9,6 +9,11 @@ QLineEdit
 )
 import os
 from Services.comprimir_pdf import comprimir_pdf_backend
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 
 
 def ventana_compresion_pdf():
@@ -63,28 +68,35 @@ def ventana_compresion_pdf():
                 etiqueta.setText("Error al comprimir el archivo")
 
     #configuraciones inciales
-        ventana = QWidget()
 
         layout_principal = QVBoxLayout()
         layout_botones = QHBoxLayout()
             
 
-        ventana.setWindowTitle("PDF tools")
-        ventana.resize(500 , 300)
+        ventana = QWidget()
+        ventana.setStyleSheet(ESTILO_VENTANA)
+        ventana.setWindowTitle("PDF Tools")
+        ventana.setFixedSize(500,300)
+        ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
 
 
         #botones
 
         titulo = QLabel("Bienvenido a PDF tools", ventana)
+        titulo.setStyleSheet(ESTILO_TITULO)
 
         etiqueta = QLabel("selecciona un archivo PDF para comprimir")
+        etiqueta.setStyleSheet(ESTILO_ESTADO)
 
         etiqueta_nombre = QLabel("")
+        etiqueta_nombre.setStyleSheet(ESTILO_ESTADO)
         etiqueta_nombre.hide()
 
         selecciona = QPushButton("selecciona")
+        selecciona.setStyleSheet(ESTILO_BOTON)
 
         comprimir = QPushButton("comprimir")
+        comprimir.setStyleSheet(ESTILO_BOTON)
 
         # organizacion de botones
 

@@ -32,6 +32,8 @@ def unir_PDFs(pdfs, salida):
 
     print("PDF generado correctamente")
 
+    return True, "PDF generado correctamente"
+
 
 
 

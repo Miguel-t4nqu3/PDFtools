@@ -9,6 +9,11 @@ QLineEdit
 )
 import os
 from Services.extraer_txt_pdf_digital import extraer_texto_pdf_backend
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 
 
 def extraer_txt_digital_ventana():
@@ -34,13 +39,13 @@ def extraer_txt_digital_ventana():
             archivo_seleccionado
         )
 
-        etiqueta.setText(f"archivo seleccionado: {nombre}")
+        etiqueta.setText(f"Archivo seleccionado: {nombre}")
 
     def extraer_texto_digital():
         nonlocal archivo_seleccionado
 
         if not archivo_seleccionado:
-            etiqueta.setText("no has seleccionado ningun archivo para extraer el texto digital")
+            etiqueta.setText("No has seleccionado ningun archivo para extraer el texto digital")
             etiqueta.show()
             return
 
@@ -58,17 +63,16 @@ def extraer_txt_digital_ventana():
         resultado = extraer_texto_pdf_backend(archivo_seleccionado, ruta_salida)
 
         if resultado:
-            etiqueta.setText("se ha extraido el texto digital correctamente")
+            etiqueta.setText("Se ha extraido el texto digital correctamente")
             etiqueta.show()
 
 
 
     ventana = QWidget()
-        
-        #creamos una ventana 
-        
+    ventana.setStyleSheet(ESTILO_VENTANA)
     ventana.setWindowTitle("PDF Tools")
-    ventana.resize(500, 300)
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
         
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
@@ -76,14 +80,19 @@ def extraer_txt_digital_ventana():
     # definimos los botones y dialogos 
 
     titulo = QLabel("Bienvenido pdf tools",ventana)
+    titulo.setStyleSheet(ESTILO_TITULO)
 
-    etiqueta = QLabel("selecciona el PDF del que quieres extraer el texto digital¡")
+    etiqueta = QLabel("Selecciona el PDF del que quieres extraer el texto digital")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
-    etiqueta_descripcion = QLabel("esta funciono solo permite extraer texto digital, no texto escaneado")
+    etiqueta_descripcion = QLabel("Esta funcion solo permite extraer texto digital, no texto escaneado")
+    etiqueta_descripcion.setStyleSheet(ESTILO_ESTADO)
 
+    seleccionar = QPushButton ("Seleccionar PDF")
+    seleccionar.setStyleSheet(ESTILO_BOTON)
 
-    seleccionar = QPushButton ("seleccionar PDF")
-    generar = QPushButton("extraer texto digital")
+    generar = QPushButton("Extraer texto digital")
+    generar.setStyleSheet(ESTILO_BOTON)
 
     #organizacion
 

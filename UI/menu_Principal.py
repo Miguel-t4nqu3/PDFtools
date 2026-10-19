@@ -23,6 +23,8 @@ from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
 from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
+from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,
+                        ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO)
 
 
 ventana_hija = None
@@ -132,10 +134,7 @@ def menu_principal_ventana():
 
     ventana = QWidget()
 
-    ventana.setStyleSheet("""
-    QWidget{
-        background-color: #06122B;
-        color: white;}""")
+    ventana.setStyleSheet(ESTILO_VENTANA)
 
     
     ventana.setWindowTitle("PDF Tools v1.0")
@@ -145,22 +144,6 @@ def menu_principal_ventana():
     ventana.setWindowIcon(
     QIcon("Assets/Icons/pdf_imagen.png"))
 
-    estilo_boton = """
-        QPushButton{
-            background-color: #8B5CF6;
-            color: white;
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 11pt;
-            font-weight: bold;
-        }
-
-        QPushButton:hover{
-            background-color: #A855F7;
-            border: 2px solid #D8B4FE;
-        }
-        """
-
 
     layout_derecho = QVBoxLayout()
 
@@ -168,11 +151,7 @@ def menu_principal_ventana():
 
     titulo = QLabel("PDF Tools v1.0")
 
-    titulo.setStyleSheet("""
-        font-size: 40px;
-        font-weight: bold;
-        color: #A855F7;
-        """)
+    titulo.setStyleSheet(ESTILO_TITULO)
 
     logo = QLabel()
 
@@ -180,49 +159,49 @@ def menu_principal_ventana():
         QPixmap("Assets/Icons/pdf_imagen.png").scaled(160,160))
 
     btn_info = QPushButton("ⓘ")
-    btn_info.setStyleSheet(estilo_boton)
+    btn_info.setStyleSheet(ESTILO_BOTON)
     
     
     btn_unir = QPushButton("Unir PDF")
-    btn_unir.setStyleSheet(estilo_boton)
+    btn_unir.setStyleSheet(ESTILO_BOTON)
     btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
 
     btn_dividir = QPushButton("Dividir PDF")
     btn_dividir.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
-    btn_dividir.setStyleSheet(estilo_boton)
+    btn_dividir.setStyleSheet(ESTILO_BOTON)
 
     btn_desbloqueo = QPushButton("Desbloquear PDF")
-    btn_desbloqueo.setStyleSheet(estilo_boton)
+    btn_desbloqueo.setStyleSheet(ESTILO_BOTON)
     btn_desbloqueo.setIcon(QIcon("Assets/Icons/desbloqueo_imagen.png"))
 
 
     btn_bloqueo = QPushButton("Bloquear PDF")
-    btn_bloqueo.setStyleSheet(estilo_boton)
+    btn_bloqueo.setStyleSheet(ESTILO_BOTON)
     btn_bloqueo.setIcon(QIcon("Assets/Icons/bloqueo_imagen.png"))
 
     btn_convertir = QPushButton("Convierte JPG a PDF")
-    btn_convertir.setStyleSheet(estilo_boton)
+    btn_convertir.setStyleSheet(ESTILO_BOTON)
     btn_convertir.setIcon(QIcon("Assets/Icons/imagen_imagen.png"))
 
 
     btn_convertir_pdf_a_jpg = QPushButton("Convierte PDF a JPG")
-    btn_convertir_pdf_a_jpg.setStyleSheet(estilo_boton)
+    btn_convertir_pdf_a_jpg.setStyleSheet(ESTILO_BOTON)
     btn_convertir_pdf_a_jpg.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
 
     btn_convertirword = QPushButton("Convertir PDF a Word")
-    btn_convertirword.setStyleSheet(estilo_boton)
+    btn_convertirword.setStyleSheet(ESTILO_BOTON)
     btn_convertirword.setIcon(QIcon("Assets/Icons/word_imagen.png"))
 
     btn_convertirw_p = QPushButton("Convertir Word a PDF")
-    btn_convertirw_p.setStyleSheet(estilo_boton)
+    btn_convertirw_p.setStyleSheet(ESTILO_BOTON)
     btn_convertirw_p.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
 
     btn_extraer_txt_digital = QPushButton("Extraer texto de PDF digital")
-    btn_extraer_txt_digital.setStyleSheet(estilo_boton)
+    btn_extraer_txt_digital.setStyleSheet(ESTILO_BOTON)
     btn_extraer_txt_digital.setIcon(QIcon("Assets/Icons/text_imagen.png"))
 
     btn_comprimir_pdf = QPushButton("Comprimir PDF")
-    btn_comprimir_pdf.setStyleSheet(estilo_boton)
+    btn_comprimir_pdf.setStyleSheet(ESTILO_BOTON)
     btn_comprimir_pdf.setIcon(QIcon("Assets/Icons/compresion_imagen.png"))
 
 
@@ -232,8 +211,8 @@ def menu_principal_ventana():
     btn_desbloqueo.clicked.connect(abrir_desbloqueo)
     btn_bloqueo.clicked.connect(abrir_bloqueo)
     btn_convertir.clicked.connect(abrir_convertir)
-    btn_convertirword.clicked.connect(abrir_convertirword)
-    btn_convertirw_p.clicked.connect(abrir_convertirw_p)
+    btn_convertirword.clicked.connect(abrir_convertirw_p)
+    btn_convertirw_p.clicked.connect(abrir_convertirword)
     btn_convertir_pdf_a_jpg.clicked.connect(abrir_convertir_pdf_a_jpg)
     btn_extraer_txt_digital.clicked.connect(abrir_extraer_txt_digital)
     btn_comprimir_pdf.clicked.connect(abrir_comprimir_pdf)
@@ -269,9 +248,6 @@ def menu_principal_ventana():
         
     layout_izquierdo.addStretch()
     
-
-    
-        
 
     layout_principal = QHBoxLayout()
 

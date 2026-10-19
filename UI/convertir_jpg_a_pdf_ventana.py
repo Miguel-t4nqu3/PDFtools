@@ -10,6 +10,12 @@ QLineEdit
 import os
 from pypdf import PdfReader
 from Services.convertir_jpg_a_pdf import convertir_jpg_pdf
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
+
 
 def funcion_convertirJPG():
 
@@ -32,7 +38,7 @@ def funcion_convertirJPG():
 
         cantidad = len(archivos_seleccionados)
             
-        etiqueta.setText(f"archivos seleccionados: {cantidad}")
+        etiqueta.setText(f"Archivos seleccionados: {cantidad}")
 
     def btn_convertir():
 
@@ -40,7 +46,7 @@ def funcion_convertirJPG():
 
         if not archivos_seleccionados:
 
-            etiqueta.setText("no has seleccionado ningun archivo para convertir")
+            etiqueta.setText("No has seleccionado ningun archivo para convertir")
             etiqueta.show()
             return
 
@@ -54,33 +60,39 @@ def funcion_convertirJPG():
             return
 
         convertir_jpg_pdf(archivos_seleccionados, ruta_salida)
-        print("ejecutado satisfactoriamente")
+        print("Ejecutado satisfactoriamente")
 
-        etiqueta.setText("se ha convertido el archivo correctamente")
+        etiqueta.setText("Se ha convertido el archivo correctamente")
 
         return
 
 
     #configuraciones inciales
-    ventana = QWidget()
 
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
         
 
-    ventana.setWindowTitle("PDF tools")
-    ventana.resize(500 , 300)
+    ventana = QWidget()
+    ventana.setStyleSheet(ESTILO_VENTANA)
+    ventana.setWindowTitle("PDF Tools")
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
 
 
     #botones
 
     titulo = QLabel("Bienvenido a PDF tools", ventana)
+    titulo.setStyleSheet(ESTILO_TITULO)
 
-    etiqueta = QLabel("selecciona imagen o varias imagenes")
+    etiqueta = QLabel("Selecciona imagen o varias imagenes")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
-    selecciona = QPushButton("selecciona")
+    selecciona = QPushButton("Selecciona")
+    selecciona.setStyleSheet(ESTILO_BOTON)
 
-    convertir = QPushButton("convertir")
+    convertir = QPushButton("Convertir")
+    convertir.setStyleSheet(ESTILO_BOTON)
 
 
     #orden de vista 

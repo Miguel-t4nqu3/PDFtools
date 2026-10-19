@@ -6,7 +6,13 @@ QFileDialog,
 QVBoxLayout,
 QHBoxLayout
 )
-from Services.unir_pdf import unir_PDFs
+from Services.unir_PDF import unir_PDFs
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
+
 
 def ventana_unirpdf():
 
@@ -30,7 +36,7 @@ def ventana_unirpdf():
 
         if len(archivos) < 2:
 
-            etiqueta.setText("debes cargar al menos 2 archivos para poder unir ")
+            etiqueta.setText("Debes cargar al menos 2 archivos para poder unir ")
             return
 
 
@@ -74,11 +80,10 @@ def ventana_unirpdf():
     #CONFIGURACION 
 
     ventana = QWidget()
-
-    #crea una ventana 
-
+    ventana.setStyleSheet(ESTILO_VENTANA)
     ventana.setWindowTitle("PDF Tools")
-    ventana.resize(500, 300)
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
 
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
@@ -92,15 +97,20 @@ def ventana_unirpdf():
     "Bienvenido a PDF Tools",
     ventana
     )
+    titulo.setStyleSheet(ESTILO_TITULO)
+
     #titulo en pantalla buscar la forma de mejorar 
 
-    selecciona = QPushButton("selecciona¡")
+    selecciona = QPushButton("Selecciona")
+    selecciona.setStyleSheet(ESTILO_BOTON)
     # boton de unir pdf 
 
-    unir_PDF = QPushButton("Unir PDFs")
+    unir_PDF = QPushButton("Unir PDF")
+    unir_PDF.setStyleSheet(ESTILO_BOTON)
     # boton de unir pdf 
 
-    etiqueta = QLabel("elige los archivos que quieres unir :)")
+    etiqueta = QLabel("Elige los archivos que quieres unir")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
     #############################################################################
     #CONFIGURACION DE BOTONES Y FUNCIONES

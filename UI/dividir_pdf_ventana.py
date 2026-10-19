@@ -11,6 +11,11 @@ import os
 from pypdf import PdfWriter # crear
 from pypdf import PdfReader
 from Services.dividir_pdf import dividir_PDFs
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 
 def dividirpdf_ventana():
     
@@ -36,14 +41,14 @@ def dividirpdf_ventana():
             archivo_seleccionado
         )
 
-        etiqueta.setText(f"archivo seleccionado: {nombre}")
+        etiqueta.setText(f"Archivo seleccionado: {nombre}")
 
         escoje_rango()
 
     def escoje_rango():
         global cantidad_paginas
 
-        etiqueta2.setText("escoje el rango")
+        etiqueta2.setText("Escoje el rango")
 
         desde.show()
         hasta.show()
@@ -55,7 +60,7 @@ def dividirpdf_ventana():
 
         cantidad_paginas = len(reader.pages)
 
-        etiqueta3.setText(f"el archivo contiene: {cantidad_paginas} paginas")
+        etiqueta3.setText(f"El archivo contiene: {cantidad_paginas} paginas")
 
     def generar_pdf():
         
@@ -64,15 +69,15 @@ def dividirpdf_ventana():
         texto_fin = hasta.text()
 
         if not texto_incio or not texto_fin:
-            etiqueta2.setText("debes ingresar un rango valido")
+            etiqueta2.setText("Debes ingresar un rango valido")
             return
 
         if not texto_incio.isdigit():
-            etiqueta2.setText("el rango de incio debe ser numerico")
+            etiqueta2.setText("El rango de incio debe ser numerico")
             return
 
         if not texto_fin.isdigit():
-            etiqueta2.setText("el rango final debe ser numerico ")
+            etiqueta2.setText("El rango final debe ser numerico ")
             return
 
         inicio = int(desde.text())
@@ -82,7 +87,7 @@ def dividirpdf_ventana():
         print(fin)
 
         if inicio <= 0:
-            etiqueta2.setText("el primer valor tiene que ser mayor a 0 ")
+            etiqueta2.setText("El primer valor tiene que ser mayor a 0 ")
             return
 
         if inicio > fin:
@@ -90,8 +95,10 @@ def dividirpdf_ventana():
             return
                 
         if fin >= cantidad_paginas:
-            etiqueta2.setText(f"el pdf solo contiene {cantidad_paginas} de paginas ")
+            etiqueta2.setText(f"El pdf solo contiene {cantidad_paginas} de paginas ")
             return
+
+        etiqueta2.setText("Archivo dividido correctamente")
 
         #################################################################
         #conexion con el backend
@@ -108,7 +115,7 @@ def dividirpdf_ventana():
             return
         if not archivo_seleccionado:
 
-            etiqueta2.setText("debes seleccionar un PDF  ")
+            etiqueta2.setText("Debes seleccionar un PDF  ")
 
             return
 
@@ -117,34 +124,38 @@ def dividirpdf_ventana():
 
 
         dividir_PDFs(archivo_seleccionado,inicio, fin, ruta_salida)
-        print("archivo guardado OKI ")
+        print("Archivo guardado")
 
         
 
     ventana = QWidget()
-    
-    #creamos una ventana 
-    
+    ventana.setStyleSheet(ESTILO_VENTANA)
     ventana.setWindowTitle("PDF Tools")
-    ventana.resize(500, 300)
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
     
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
 
     # definimos los botones y dialogos 
 
-    titulo = QLabel(
-        "Bienvenido pdf tools",
-        ventana
-        )
+    titulo = QLabel("Bienvenido pdf tools",ventana)
+    titulo.setStyleSheet(ESTILO_TITULO)
 
-    etiqueta = QLabel("selecciona el PDF que quieres dividir¡")
+    etiqueta = QLabel("Selecciona el PDF que quieres dividir")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
     etiqueta2 = QLabel("")
+    etiqueta2.setStyleSheet(ESTILO_ESTADO)
+
     etiqueta3 = QLabel("")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
     
     desde = QLineEdit()
+    desde.setStyleSheet(ESTILO_BOTON)
+
     hasta = QLineEdit()
+    hasta.setStyleSheet(ESTILO_BOTON)
 
     desde.setPlaceholderText("Desde")
     hasta.setPlaceholderText("Hasta")
@@ -152,7 +163,9 @@ def dividirpdf_ventana():
     
 
     seleccionar = QPushButton ("seleccionar PDF")
+    seleccionar.setStyleSheet(ESTILO_BOTON)
     generar = QPushButton("dividir PDF")
+    generar.setStyleSheet(ESTILO_BOTON)
 
 
     #organizacion 

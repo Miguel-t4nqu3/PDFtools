@@ -10,6 +10,11 @@ QLineEdit
 import os
 from pypdf import PdfReader
 from Services.desbloquear_pdf import desbloquear_PDFs
+from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 
 def desbloqueo_ventana():
 
@@ -69,7 +74,7 @@ def desbloqueo_ventana():
         ruta_salida, _ = QFileDialog.getSaveFileName(
         ventana,
         "Guardar PDF",
-        "PDF_bloqueado.pdf",
+        "PDF_desbloqueado.pdf",
         "PDF Files (*.pdf)")
          
         if not ruta_salida:
@@ -82,29 +87,35 @@ def desbloqueo_ventana():
     #creamos una ventana 
 
     ventana = QWidget()
+    ventana.setStyleSheet(ESTILO_VENTANA)
+    ventana.setWindowTitle("PDF Tools")
+    ventana.setFixedSize(500,300)
+    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
 
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
     
 
-    ventana.setWindowTitle("PDF tools")
-    ventana.resize(500 , 300)
-
-    titulo = QLabel(
-            "Bienvenido pdf tools",
-            ventana
-            )
+    titulo = QLabel("Bienvenido pdf tools",ventana)
+    titulo.setStyleSheet(ESTILO_TITULO)
     
     etiqueta = QLabel("selcciona pdf a desbloquear")
+    etiqueta.setStyleSheet(ESTILO_ESTADO)
 
     etiqueta2 = QLabel("ingresa la contraseña del documento")
+    etiqueta2.setStyleSheet(ESTILO_ESTADO)
 
     seleccionar = QPushButton("selecciona")
+    seleccionar.setStyleSheet(ESTILO_BOTON)
+
     desbloquear = QPushButton("desbloquear")
+    desbloquear.setStyleSheet(ESTILO_BOTON)
 
     password = QLineEdit()
+    password.setStyleSheet(ESTILO_BOTON)
 
     password.setPlaceholderText("ingresar la contraseña")
+    
 
     password.setEchoMode(QLineEdit.EchoMode.Password)
 
