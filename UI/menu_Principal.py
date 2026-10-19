@@ -8,7 +8,10 @@ QFileDialog,
 QVBoxLayout,
 QHBoxLayout
 )
-
+from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 # importamos las librerias necesarias 
 from UI.unir_pdf_ventana import ventana_unirpdf
 from UI.dividir_pdf_ventana import dividirpdf_ventana
@@ -20,6 +23,7 @@ from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
 from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
+
 
 ventana_hija = None
 ventana_hija2 = None
@@ -104,24 +108,123 @@ def abrir_comprimir_pdf():
 
     ventana_hija10.show()
 
+def mostrar_info():
+
+    QMessageBox.information(
+            None,
+            "Acerca de PDF Tools",
+            """
+    PDF Tools v1.0
+
+    Desarrollado por:
+
+    Miguel Angel Castiblanco Ramirez
+
+    Aplicación para gestión y conversión de archivos PDF.
+
+    Repositorio:
+    github.com/Miguel-t4nqu3/PDFtools""")
+
 
 def menu_principal_ventana():
 
+      # modelaje visual
+
     ventana = QWidget()
-    ventana.setWindowTitle("PDF Tools")
 
-    layout = QVBoxLayout()
+    ventana.setStyleSheet("""
+    QWidget{
+        background-color: #06122B;
+        color: white;}""")
 
+    
+    ventana.setWindowTitle("PDF Tools v1.0")
+    ventana.setFixedSize(700, 600)
+  
+
+    ventana.setWindowIcon(
+    QIcon("Assets/Icons/pdf_imagen.png"))
+
+    estilo_boton = """
+        QPushButton{
+            background-color: #8B5CF6;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 11pt;
+            font-weight: bold;
+        }
+
+        QPushButton:hover{
+            background-color: #A855F7;
+            border: 2px solid #D8B4FE;
+        }
+        """
+
+
+    layout_derecho = QVBoxLayout()
+
+    layout_izquierdo = QVBoxLayout()
+
+    titulo = QLabel("PDF Tools v1.0")
+
+    titulo.setStyleSheet("""
+        font-size: 40px;
+        font-weight: bold;
+        color: #A855F7;
+        """)
+
+    logo = QLabel()
+
+    logo.setPixmap(
+        QPixmap("Assets/Icons/pdf_imagen.png").scaled(160,160))
+
+    btn_info = QPushButton("ⓘ")
+    btn_info.setStyleSheet(estilo_boton)
+    
+    
     btn_unir = QPushButton("Unir PDF")
+    btn_unir.setStyleSheet(estilo_boton)
+    btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
+
     btn_dividir = QPushButton("Dividir PDF")
-    btn_desbloqueo = QPushButton("desbloquear PDF")
-    btn_bloqueo = QPushButton("bloquear PDF")
-    btn_convertir = QPushButton("convierte JPG->PDF")
-    btn_convertir_pdf_a_jpg = QPushButton("convierte PDF->JPG")
-    btn_convertirword = QPushButton("convertir PDF a Word")
-    btn_convertirw_p = QPushButton("convertir Word a PDF")
-    btn_extraer_txt_digital = QPushButton("extraer texto de PDF digital")
-    btn_comprimir_pdf = QPushButton("comprimir PDF")
+    btn_dividir.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
+    btn_dividir.setStyleSheet(estilo_boton)
+
+    btn_desbloqueo = QPushButton("Desbloquear PDF")
+    btn_desbloqueo.setStyleSheet(estilo_boton)
+    btn_desbloqueo.setIcon(QIcon("Assets/Icons/desbloqueo_imagen.png"))
+
+
+    btn_bloqueo = QPushButton("Bloquear PDF")
+    btn_bloqueo.setStyleSheet(estilo_boton)
+    btn_bloqueo.setIcon(QIcon("Assets/Icons/bloqueo_imagen.png"))
+
+    btn_convertir = QPushButton("Convierte JPG a PDF")
+    btn_convertir.setStyleSheet(estilo_boton)
+    btn_convertir.setIcon(QIcon("Assets/Icons/imagen_imagen.png"))
+
+
+    btn_convertir_pdf_a_jpg = QPushButton("Convierte PDF a JPG")
+    btn_convertir_pdf_a_jpg.setStyleSheet(estilo_boton)
+    btn_convertir_pdf_a_jpg.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
+
+    btn_convertirword = QPushButton("Convertir PDF a Word")
+    btn_convertirword.setStyleSheet(estilo_boton)
+    btn_convertirword.setIcon(QIcon("Assets/Icons/word_imagen.png"))
+
+    btn_convertirw_p = QPushButton("Convertir Word a PDF")
+    btn_convertirw_p.setStyleSheet(estilo_boton)
+    btn_convertirw_p.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
+
+    btn_extraer_txt_digital = QPushButton("Extraer texto de PDF digital")
+    btn_extraer_txt_digital.setStyleSheet(estilo_boton)
+    btn_extraer_txt_digital.setIcon(QIcon("Assets/Icons/text_imagen.png"))
+
+    btn_comprimir_pdf = QPushButton("Comprimir PDF")
+    btn_comprimir_pdf.setStyleSheet(estilo_boton)
+    btn_comprimir_pdf.setIcon(QIcon("Assets/Icons/compresion_imagen.png"))
+
 
 
     btn_unir.clicked.connect(abrir_unir)
@@ -134,20 +237,48 @@ def menu_principal_ventana():
     btn_convertir_pdf_a_jpg.clicked.connect(abrir_convertir_pdf_a_jpg)
     btn_extraer_txt_digital.clicked.connect(abrir_extraer_txt_digital)
     btn_comprimir_pdf.clicked.connect(abrir_comprimir_pdf)
+    btn_info.clicked.connect(mostrar_info)
 
 
-    layout.addWidget(btn_unir)
-    layout.addWidget(btn_dividir)
-    layout.addWidget(btn_desbloqueo)
-    layout.addWidget(btn_bloqueo)
-    layout.addWidget(btn_convertir)
-    layout.addWidget(btn_convertirword)
-    layout.addWidget(btn_convertirw_p)
-    layout.addWidget(btn_convertir_pdf_a_jpg)
-    layout.addWidget(btn_extraer_txt_digital)
-    layout.addWidget(btn_comprimir_pdf)
+    layout_derecho.addWidget(btn_unir)
+    layout_derecho.addWidget(btn_dividir)
+    layout_derecho.addWidget(btn_desbloqueo)
+    layout_derecho.addWidget(btn_bloqueo)
+    layout_derecho.addWidget(btn_convertir)
+    layout_derecho.addWidget(btn_convertirword)
+    layout_derecho.addWidget(btn_convertirw_p)
+    layout_derecho.addWidget(btn_convertir_pdf_a_jpg)
+    layout_derecho.addWidget(btn_extraer_txt_digital)
+    layout_derecho.addWidget(btn_comprimir_pdf)
+
     
-    ventana.setLayout(layout)
+    layout_izquierdo.addStretch()
+        
+    layout_izquierdo.addWidget(
+        logo,
+        alignment=Qt.AlignmentFlag.AlignCenter
+        )
+        
+    layout_izquierdo.addWidget(
+        titulo,
+        alignment=Qt.AlignmentFlag.AlignCenter
+        )
+
+    layout_izquierdo.addWidget(btn_info, 
+    alignment=Qt.AlignmentFlag.AlignCenter)
+        
+    layout_izquierdo.addStretch()
+    
+
+    
+        
+
+    layout_principal = QHBoxLayout()
+
+    layout_principal.addLayout(layout_izquierdo)
+    layout_principal.addLayout(layout_derecho)
+
+    ventana.setLayout(layout_principal)
 
     return ventana
 

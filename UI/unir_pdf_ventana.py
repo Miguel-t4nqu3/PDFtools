@@ -60,12 +60,15 @@ def ventana_unirpdf():
         if not ruta_salida:
             return
 
-        unir_PDFs(
+        resultado, mensaje = unir_PDFs(
             archivos_seleccionados,
             ruta_salida
         )
 
-        etiqueta.setText("PDF listo")
+        if not resultado:
+            etiqueta.setText(f"Error: {mensaje}")
+        else:
+            etiqueta.setText("PDF listo")
 
     ###########################################################################
     #CONFIGURACION 
