@@ -10,14 +10,14 @@ QLineEdit
 import os
 from pypdf import PdfWriter # crear
 from pypdf import PdfReader
-from Services.dividir_pdf import dividir_PDFs
+from Services.extraer_paginas import dividir_PDFs
 from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
 from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMessageBox
 
-def dividirpdf_ventana():
+def extraerpaginas_ventana():
     
 
 

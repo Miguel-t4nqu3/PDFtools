@@ -14,7 +14,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMessageBox
 # importamos las librerias necesarias 
 from UI.unir_pdf_ventana import ventana_unirpdf
-from UI.dividir_pdf_ventana import dividirpdf_ventana
+from UI.extraer_paginas_ventana import extraerpaginas_ventana
 from UI.desbloquear_pdf_ventana import desbloqueo_ventana
 from UI.bloquear_pdf_ventana import bloqueo_ventana
 from UI.convertir_jpg_a_pdf_ventana import funcion_convertirJPG
@@ -23,8 +23,8 @@ from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
 from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
-from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,
-                        ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO)
+from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,
+                        ESTILO_TITULO)
 
 
 ventana_hija = None
@@ -46,10 +46,10 @@ def abrir_unir():
 
     ventana_hija.show()
 
-def abrir_dividir():
+def abrir_extraer_paginas():
     global ventana_hija2
 
-    ventana_hija2 = dividirpdf_ventana()
+    ventana_hija2 = extraerpaginas_ventana()
 
     ventana_hija2.show()
 
@@ -166,9 +166,9 @@ def menu_principal_ventana():
     btn_unir.setStyleSheet(ESTILO_BOTON)
     btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
 
-    btn_dividir = QPushButton("Dividir PDF")
-    btn_dividir.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
-    btn_dividir.setStyleSheet(ESTILO_BOTON)
+    btn_extraer_paginas = QPushButton("Dividir PDF")
+    btn_extraer_paginas.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
+    btn_extraer_paginas.setStyleSheet(ESTILO_BOTON)
 
     btn_desbloqueo = QPushButton("Desbloquear PDF")
     btn_desbloqueo.setStyleSheet(ESTILO_BOTON)
@@ -207,7 +207,7 @@ def menu_principal_ventana():
 
 
     btn_unir.clicked.connect(abrir_unir)
-    btn_dividir.clicked.connect(abrir_dividir)
+    btn_extraer_paginas.clicked.connect(abrir_extraer_paginas)
     btn_desbloqueo.clicked.connect(abrir_desbloqueo)
     btn_bloqueo.clicked.connect(abrir_bloqueo)
     btn_convertir.clicked.connect(abrir_convertir)
@@ -220,7 +220,7 @@ def menu_principal_ventana():
 
 
     layout_derecho.addWidget(btn_unir)
-    layout_derecho.addWidget(btn_dividir)
+    layout_derecho.addWidget(btn_extraer_paginas)
     layout_derecho.addWidget(btn_desbloqueo)
     layout_derecho.addWidget(btn_bloqueo)
     layout_derecho.addWidget(btn_convertir)

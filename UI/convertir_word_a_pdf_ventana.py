@@ -14,6 +14,7 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMessageBox
+from utils import resource_path
 
 
 def convertirword_ventana():
@@ -77,7 +78,7 @@ def convertirword_ventana():
     ventana.setStyleSheet(ESTILO_VENTANA)
     ventana.setWindowTitle("PDF Tools")
     ventana.setFixedSize(500,300)
-    ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
+    ventana.setWindowIcon(QIcon(resource_path("Assets/Icons/pdf_imagen.png")))
 
     titulo = QLabel("Bienvenido a PDF tools", ventana)
     titulo.setStyleSheet(ESTILO_TITULO)
