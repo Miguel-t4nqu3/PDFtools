@@ -10,7 +10,7 @@ QLineEdit
 import os
 from pypdf import PdfReader
 from Services.desbloquear_pdf import desbloquear_PDFs
-from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from UI.estilos import (ESTILO_BOTON,ESTILO_ESTADO,ESTILO_TITULO,ESTILO_VENTANA)
 from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt

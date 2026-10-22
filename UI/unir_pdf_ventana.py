@@ -7,7 +7,7 @@ QVBoxLayout,
 QHBoxLayout
 )
 from Services.unir_PDF import unir_PDFs
-from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from UI.estilos import (ESTILO_BOTON,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
 from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
@@ -110,7 +110,7 @@ def ventana_unirpdf():
     # boton de unir pdf 
 
     etiqueta = QLabel("Elige los archivos que quieres unir")
-    etiqueta.setStyleSheet(ESTILO_ESTADO)
+    etiqueta.setStyleSheet(ESTILO_SUBTITULO)
 
     #############################################################################
     #CONFIGURACION DE BOTONES Y FUNCIONES

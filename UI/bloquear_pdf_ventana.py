@@ -13,7 +13,7 @@ import os
 from pypdf import PdfReader
 from Services.bloquear_pdf import bloqueo_PDFs
 from Services.bloquear_pdf import generar_contraseñas
-from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
+from UI.estilos import(ESTILO_BOTON,ESTILO_ESTADO,ESTILO_SELECCIONADO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
 from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
@@ -115,10 +115,10 @@ def bloqueo_ventana():
     titulo.setStyleSheet(ESTILO_TITULO)
     
     etiqueta = QLabel("selcciona pdf a bloquear")
-    etiqueta.setStyleSheet(ESTILO_ESTADO)
+    etiqueta.setStyleSheet(ESTILO_SUBTITULO)
 
     etiqueta2 = QLabel("ingresa la contraseña que le colocaras al documento")
-    etiqueta2.setStyleSheet(ESTILO_ESTADO)
+    etiqueta2.setStyleSheet(ESTILO_SUBTITULO)
 
     seleccionar = QPushButton("selecciona")
     seleccionar.setStyleSheet(ESTILO_BOTON)

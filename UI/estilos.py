@@ -50,13 +50,31 @@ color: #D8B4FE;
 """
 
 # =========================
-# TEXTO DESCRIPTIVO
+# ESTILO NO SELECCIONADO
 # =========================
 
-ESTILO_DESCRIPCION = """
-font-size: 10pt;
-color: #9CA3AF;
-"""
+QUITAR_SELECCION = """
+QFrame{border:2px solid #cccccc; 
+background:white;}"""
+
+# =========================
+# ESTILO SELECCIONADO
+# =========================
+
+ESTILO_SELECCIONADO = """
+QFrame{background:white;
+border:3px solid #7B68EE;
+border-radius:10px;}"""
+
+# =========================
+# ESTILO LETRA INFO
+# =========================
+
+LETRA_INFO = """border:none;
+font-size:14px;
+font-weight:bold;
+color:#444444;
+padding-left:5px;"""
 
 # =========================
 # LABEL DE ESTADO
@@ -67,26 +85,17 @@ font-size: 11pt;
 font-weight: bold;
 color: #D8B4FE;
 """
-
 # =========================
-# BOTON INFORMACION
+# ESTILO VENTANA SUAVE 
 # =========================
 
-ESTILO_INFO = """
-QPushButton{
-    background-color: #8B5CF6;
-    color: white;
-    border-radius: 15px;
-    padding: 8px;
-    font-size: 16pt;
-    font-weight: bold;
-}
-
-QPushButton:hover{
-    background-color: #A855F7;
-    border: 2px solid #D8B4FE;
-}
+ESTILO_VENTANA_SUAVE = """
+background:#F7F4FF;
 """
+
+
+
+
 
 ##########################################################################
 ######### COMO USARLA ###################################################

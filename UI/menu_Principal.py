@@ -166,7 +166,7 @@ def menu_principal_ventana():
     btn_unir.setStyleSheet(ESTILO_BOTON)
     btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
 
-    btn_extraer_paginas = QPushButton("Dividir PDF")
+    btn_extraer_paginas = QPushButton("extraer paginas")
     btn_extraer_paginas.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
     btn_extraer_paginas.setStyleSheet(ESTILO_BOTON)
 

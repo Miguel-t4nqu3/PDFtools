@@ -1,198 +1,214 @@
 from PyQt6.QtWidgets import (
-QWidget,
-QPushButton,
-QLabel,
-QFileDialog,
-QVBoxLayout,
-QHBoxLayout,
-QLineEdit
+    QWidget,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+    QGridLayout,
+    QScrollArea,
+    QHBoxLayout
 )
-import os
-from pypdf import PdfWriter # crear
-from pypdf import PdfReader
-from Services.extraer_paginas import dividir_PDFs
-from UI.estilos import (ESTILO_BOTON,ESTILO_DESCRIPCION,ESTILO_ESTADO,ESTILO_INFO,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
-from PyQt6.QtGui import QIcon
-from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QFrame, QLabel, QVBoxLayout
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMessageBox
+import pymupdf
+import os
+from PyQt6.QtGui import QIcon
+
+#from Services.extraer_paginas import dividir_PDFs
+from UI.estilos import (ESTILO_BOTON,ESTILO_SELECCIONADO,QUITAR_SELECCION,LETRA_INFO,ESTILO_VENTANA_SUAVE)
 
 def extraerpaginas_ventana():
+
     
 
 
-    def seleccionar_pdf():
-        global archivo_seleccionado
-        
+    pdf_path = r"C:\Users\mcastiblancor\Downloads\DEVOLUCION EQUIPO JOSE ANDRES MEDINA MONCADA (1).pdf"
+    nombre_archivo = os.path.basename(pdf_path)
+    pdf = pymupdf.open(pdf_path)
+    pagina = pdf[0]
+    pix = pagina.get_pixmap()
+    pix.save("pagina1.png")
 
-        archivo, _ = QFileDialog.getOpenFileName(
-                ventana,
-                "Seleccionar PDF",
-                "",
-                "PDF Files (*.pdf)"
-                )
+    print("imagen creada")
 
-        if not archivo:
-            return
-
-        archivo_seleccionado = archivo
-        
-        nombre = os.path.basename(
-            archivo_seleccionado
-        )
-
-        etiqueta.setText(f"Archivo seleccionado: {nombre}")
-
-        escoje_rango()
-
-    def escoje_rango():
-        global cantidad_paginas
-
-        etiqueta2.setText("Escoje el rango")
-
-        desde.show()
-        hasta.show()
-        generar.show()
-
-        reader = PdfReader(archivo_seleccionado)
-        if not archivo_seleccionado:
-            return
-
-        cantidad_paginas = len(reader.pages)
-
-        etiqueta3.setText(f"El archivo contiene: {cantidad_paginas} paginas")
-
-    def generar_pdf():
-        
-
-        texto_incio =  desde.text()
-        texto_fin = hasta.text()
-
-        if not texto_incio or not texto_fin:
-            etiqueta2.setText("Debes ingresar un rango valido")
-            return
-
-        if not texto_incio.isdigit():
-            etiqueta2.setText("El rango de incio debe ser numerico")
-            return
-
-        if not texto_fin.isdigit():
-            etiqueta2.setText("El rango final debe ser numerico ")
-            return
-
-        inicio = int(desde.text())
-        fin = int(hasta.text())
-
-        print (inicio)
-        print(fin)
-
-        if inicio <= 0:
-            etiqueta2.setText("El primer valor tiene que ser mayor a 0 ")
-            return
-
-        if inicio > fin:
-            etiqueta2.setText("La página inicial no puede ser mayor que la final")
-            return
-                
-        if fin >= cantidad_paginas:
-            etiqueta2.setText(f"El pdf solo contiene {cantidad_paginas} de paginas ")
-            return
-
-        etiqueta2.setText("Archivo dividido correctamente")
-
-        #################################################################
-        #conexion con el backend
-        
-
-        ruta_salida, _ = QFileDialog.getSaveFileName(
-            ventana,
-            "Guardar PDF",
-            "PDF_Dividido.pdf",
-            "PDF Files (*.pdf)"
-                )
-
-        if not ruta_salida:
-            return
-        if not archivo_seleccionado:
-
-            etiqueta2.setText("Debes seleccionar un PDF  ")
-
-            return
-
-        print("PDF:", archivo_seleccionado)
-        print("Salida:", ruta_salida)
-
-
-        dividir_PDFs(archivo_seleccionado,inicio, fin, ruta_salida)
-        print("Archivo guardado")
-
-        
-
+    
     ventana = QWidget()
-    ventana.setStyleSheet(ESTILO_VENTANA)
-    ventana.setWindowTitle("PDF Tools")
-    ventana.setFixedSize(500,300)
+    ventana.setStyleSheet(ESTILO_VENTANA_SUAVE)
     ventana.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
-    
+    ventana.setWindowTitle("PDF Tools")
+
+
     layout_principal = QVBoxLayout()
     layout_botones = QHBoxLayout()
+    layout_info = QHBoxLayout()
 
-    # definimos los botones y dialogos 
+    scroll = QScrollArea()
+    scroll.setWidgetResizable(True)
 
-    titulo = QLabel("Bienvenido pdf tools",ventana)
-    titulo.setStyleSheet(ESTILO_TITULO)
+    contenedor = QWidget()
 
-    etiqueta = QLabel("Selecciona el PDF que quieres dividir")
-    etiqueta.setStyleSheet(ESTILO_ESTADO)
+    grid = QGridLayout(contenedor)
 
-    etiqueta2 = QLabel("")
-    etiqueta2.setStyleSheet(ESTILO_ESTADO)
+    tarjetas = []
 
-    etiqueta3 = QLabel("")
-    etiqueta.setStyleSheet(ESTILO_ESTADO)
+##############################################
+###################CLASE#####################
+#############################################
+
+    class tarjetapagina(QFrame):
     
-    desde = QLineEdit()
-    desde.setStyleSheet(ESTILO_BOTON)
+            def __init__(self, numero):
+                super().__init__()
+    
+                self.numero = numero
+                self.seleccionada = False
+    
+                self.setStyleSheet(QUITAR_SELECCION)  ##########################-----> AQUI PODEMOS EDITAR COMO SE VE ANTES DE LA SELECCION
+    
+            def mousePressEvent(self, event):
+    
+                self.seleccionada = not self.seleccionada
 
-    hasta = QLineEdit()
-    hasta.setStyleSheet(ESTILO_BOTON)
+                actualizar_contador()
+    
+                if self.seleccionada:
+    
+                    self.setStyleSheet(ESTILO_SELECCIONADO)##########################-----> ESTA ES LA VISTA SELECCIONADA
+                else:
+    
+                    self.setStyleSheet(QUITAR_SELECCION) ##########################-----> ESTA ES LA CONTRAPARTE ES DECIR CUANDO NO ESTA SELECCIONADA
 
-    desde.setPlaceholderText("Desde")
-    hasta.setPlaceholderText("Hasta")
+#########################################################
+##################CREACION TARJETAS######################
 
+    for i in range(10):
+
+        ## creacion de la tarjeta donde ira la imagen 
+    
+        tarjeta = tarjetapagina(i + 1)
+        tarjetas.append(tarjeta)
+        tarjeta.setFixedSize(170, 270)
+
+
+        layout_tarjeta = QVBoxLayout()
+
+        ## imagen que ira en la tarjeta
+
+        imagen = QLabel()
+        imagen.setPixmap(QPixmap("pagina1.png"))
+        imagen.setScaledContents(True)
+        imagen.setMinimumHeight(100)
+        imagen.setStyleSheet("""QLabel{
+                            border:none;
+                            background:white;}""") ##########################-----> ESTILO DE LA IMAGEN
+
+        
+
+        titulo = QLabel(f"Pagina {i+1}")
+        titulo.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        titulo.setStyleSheet(LETRA_INFO)  ##########################-----> ESTILO DE LA LETRA PAGINA 1
+
+        layout_tarjeta.addWidget(titulo)
+        layout_tarjeta.addWidget(imagen)
+        layout_tarjeta.setContentsMargins(2,2,2,2)
+
+        tarjeta.setLayout(layout_tarjeta)
+
+        fila = i // 3
+        columna = i % 3
+
+        grid.addWidget(tarjeta, fila, columna)
+
+#################################################################
+################funciones#######################################
+
+    def seleccionar_todo_funcion():
+
+        for tarjeta in tarjetas:
+
+            tarjeta.seleccionada = True
+
+            tarjeta.setStyleSheet(
+            ESTILO_SELECCIONADO
+        )
+
+    def quitar_seleccion_funcion():
+
+        for tarjeta in tarjetas:
+
+            tarjeta.seleccionada = False
+
+            tarjeta.setStyleSheet(
+            QUITAR_SELECCION
+        )
+
+    def actualizar_contador():
+
+        paginas = []
+
+        for tarjeta in tarjetas:
+
+            if tarjeta.seleccionada:
+
+                paginas.append(tarjeta.numero)
+
+        cantidad_paginas.setText(
+            f"Seleccion: {len(paginas)} de {len(tarjetas)}"
+        )
+
+
+
+##############################################################
+#############BOTONES########################################
+
+    seleccionar_todo = QPushButton("Selecciona todo")
+    seleccionar_todo.setStyleSheet(ESTILO_BOTON)
     
 
-    seleccionar = QPushButton ("seleccionar PDF")
-    seleccionar.setStyleSheet(ESTILO_BOTON)
-    generar = QPushButton("dividir PDF")
-    generar.setStyleSheet(ESTILO_BOTON)
+    desselecionar_todo = QPushButton("Quitar seleccion")
+    desselecionar_todo.setStyleSheet(ESTILO_BOTON)
+    
+
+    generar_pdf = QPushButton("Generar PDF")
+    generar_pdf.setStyleSheet(ESTILO_BOTON)
+
+    nombre_archivo = QLabel(nombre_archivo)
+    nombre_archivo.setStyleSheet(LETRA_INFO)
+    
+    cantidad_paginas = QLabel("")
+    cantidad_paginas.setStyleSheet(LETRA_INFO)
+  
+
+    ##################################################################
+    ############### ORDEN###########################################
+
+    layout_info.addWidget(nombre_archivo)
+    layout_info.addWidget(cantidad_paginas)
+
+    layout_botones.addWidget(seleccionar_todo)
+    layout_botones.addWidget(desselecionar_todo)
+    layout_botones.addWidget(generar_pdf)
 
 
-    #organizacion 
+    ###################################################################
+    ################# conexiones #####################################
 
-    layout_principal.addWidget(titulo)
-    layout_principal.addWidget(etiqueta)
-    layout_principal.addWidget(etiqueta2)
-    layout_principal.addWidget(etiqueta3)
-
-    layout_principal.addWidget(desde)
-    layout_principal.addWidget(hasta)
-    layout_botones.addWidget(seleccionar)
-    layout_botones.addWidget(generar)
-
-    desde.hide()
-    hasta.hide()
-    generar.hide()
+    seleccionar_todo.clicked.connect(seleccionar_todo_funcion)
+    desselecionar_todo.clicked.connect(quitar_seleccion_funcion)
 
 
-    # coneccion con funciones
 
-    seleccionar.clicked.connect(seleccionar_pdf)
-    generar.clicked.connect(generar_pdf)
+
+    scroll.setWidget(contenedor)
+
+    layout_principal.addLayout(layout_info)
+
+    layout_principal.addWidget(scroll)
+
+    layout_principal.addLayout(layout_botones)
 
     ventana.setLayout(layout_principal)
 
-    layout_principal.addLayout(layout_botones)
     
     return ventana
 
