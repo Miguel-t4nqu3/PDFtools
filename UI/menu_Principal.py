@@ -23,8 +23,8 @@ from UI.convertir_pdf_a_word_ventana import convertirword_pdf_ventana
 from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
-from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,
-                        ESTILO_TITULO)
+from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,ESTILO_TITULO)
+from UI.selector_pdf import clase_selector_pdf
 
 
 ventana_hija = None
@@ -49,7 +49,7 @@ def abrir_unir():
 def abrir_extraer_paginas():
     global ventana_hija2
 
-    ventana_hija2 = extraerpaginas_ventana()
+    ventana_hija2 = clase_selector_pdf()
 
     ventana_hija2.show()
 

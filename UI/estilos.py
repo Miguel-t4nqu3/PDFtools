@@ -46,7 +46,7 @@ color: #A855F7;
 ESTILO_SUBTITULO = """
 font-size: 18px;
 font-weight: bold;
-color: #D8B4FE;
+color: #E6D5FF;
 """
 
 # =========================
@@ -73,7 +73,7 @@ border-radius:10px;}"""
 LETRA_INFO = """border:none;
 font-size:14px;
 font-weight:bold;
-color:#444444;
+color:#E6D5FF;
 padding-left:5px;"""
 
 # =========================
@@ -90,11 +90,57 @@ color: #D8B4FE;
 # =========================
 
 ESTILO_VENTANA_SUAVE = """
-background:#F7F4FF;
+background:#020F3B;
+"""
+# =========================
+# ESTILO NORMAL
+# =========================
+
+ESTILO_NORMAL = """
+QFrame{
+    background-color: #09173F;
+    border: 3px dashed #8A7BFF;
+    border-radius: 15px;
+}
+"""
+# =========================
+# ESTILO ACTIVO 
+# =========================
+
+ESTILO_ACTIVO = """
+QFrame{
+    background-color: #162561;
+    border: 3px solid #B388FF;
+    border-radius: 15px;
+}
+"""
+# =========================
+# ESTILO EXITO
+# =========================
+ESTILO_EXITO = """
+color: #57D38C;
+font-size: 16px;
+font-weight: bold;
 """
 
 
+# =========================
+# ESTILO FALLO
+# =========================
+ESTILO_FALLO = """
+color: #FF6B6B;
+font-size: 16px;
+font-weight: bold;
+"""
 
+# =========================
+# ESTILO ADVERTENCIA
+# =========================
+ESTILO_ADVERTENCIA = """
+color: #FFC857;
+font-size: 16px;
+font-weight: bold;
+"""
 
 
 ##########################################################################
