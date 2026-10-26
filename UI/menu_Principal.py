@@ -1,17 +1,18 @@
 import sys
 from PyQt6.QtWidgets import (
-QApplication,
 QWidget,
 QPushButton,
 QLabel,
-QFileDialog,
 QVBoxLayout,
-QHBoxLayout
+QHBoxLayout,
+QGridLayout
 )
 from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtCore import QTimer
+
 # importamos las librerias necesarias 
 from UI.unir_pdf_ventana import ventana_unirpdf
 from UI.extraer_paginas_ventana import extraerpaginas_ventana
@@ -25,238 +26,220 @@ from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
 from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,ESTILO_TITULO)
 from UI.selector_pdf import clase_selector_pdf
+from UI.ventana_carga import ventana_carga
+from UI.tarjeta_menuprincipal import tarjeta_categoria
 
 
-ventana_hija = None
-ventana_hija2 = None
-ventana_hija3 = None
-ventana_hija4 = None
-ventana_hija5 = None
-ventana_hija6 = None
-ventana_hija7 = None
-ventana_hija8 = None
-ventana_hija9 = None
-ventana_hija10 = None
+class menu_principal(QWidget):
 
+    def __init__(self):
+        super().__init__()
 
-def abrir_unir():
-    global ventana_hija
+        self.crear_widgets()
+        self.crear_layout()
+        self.conectar_eventos()
 
-    ventana_hija = ventana_unirpdf()
+    def mostrar_info(self):
 
-    ventana_hija.show()
+        QMessageBox.information(
+                None,
+                "Acerca de PDF Tools",
+                """
+        PDF Tools v1.0
 
-def abrir_extraer_paginas():
-    global ventana_hija2
+        Desarrollado por:
 
-    ventana_hija2 = clase_selector_pdf()
+        Miguel Angel Castiblanco Ramirez
 
-    ventana_hija2.show()
+        Aplicación para gestión y conversión de archivos PDF.
 
-def abrir_desbloqueo():
-    global ventana_hija3
+        Repositorio:
+        github.com/Miguel-t4nqu3/PDFtools""")
 
-    ventana_hija3 = desbloqueo_ventana()
 
-    ventana_hija3.show()
+    def crear_widgets(self):
 
-def abrir_bloqueo():
-    global ventana_hija4
 
-    ventana_hija4 = bloqueo_ventana()
+        self.setStyleSheet(ESTILO_VENTANA)
 
-    ventana_hija4.show()
-
-def abrir_convertir():
-    global ventana_hija5
-
-    ventana_hija5 = funcion_convertirJPG()
-
-    ventana_hija5.show()
-
-def abrir_convertirword():
-    global ventana_hija6
-
-    ventana_hija6 = convertirword_ventana()
-
-    ventana_hija6.show()
-
-def abrir_convertirw_p():
-    global ventana_hija7
-
-    ventana_hija7 = convertirword_pdf_ventana()
-
-    ventana_hija7.show()
-
-def abrir_convertir_pdf_a_jpg():
-
-    global ventana_hija8
-
-    ventana_hija8 = ventana_convertirPDF_a_JPG()
-
-    ventana_hija8.show()
-
-def abrir_extraer_txt_digital():
-    global ventana_hija9
-
-    ventana_hija9 = extraer_txt_digital_ventana()
-
-    ventana_hija9.show()
-
-def abrir_comprimir_pdf():
-    global ventana_hija10
-
-    ventana_hija10 = ventana_compresion_pdf()
-
-    ventana_hija10.show()
-
-def mostrar_info():
-
-    QMessageBox.information(
-            None,
-            "Acerca de PDF Tools",
-            """
-    PDF Tools v1.0
-
-    Desarrollado por:
-
-    Miguel Angel Castiblanco Ramirez
-
-    Aplicación para gestión y conversión de archivos PDF.
-
-    Repositorio:
-    github.com/Miguel-t4nqu3/PDFtools""")
-
-
-def menu_principal_ventana():
-
-      # modelaje visual
-
-    ventana = QWidget()
-
-    ventana.setStyleSheet(ESTILO_VENTANA)
-
-    
-    ventana.setWindowTitle("PDF Tools v1.0")
-    ventana.setFixedSize(700, 600)
-  
-
-    ventana.setWindowIcon(
-    QIcon("Assets/Icons/pdf_imagen.png"))
-
-
-    layout_derecho = QVBoxLayout()
-
-    layout_izquierdo = QVBoxLayout()
-
-    titulo = QLabel("PDF Tools v1.0")
-
-    titulo.setStyleSheet(ESTILO_TITULO)
-
-    logo = QLabel()
-
-    logo.setPixmap(
-        QPixmap("Assets/Icons/pdf_imagen.png").scaled(160,160))
-
-    btn_info = QPushButton("ⓘ")
-    btn_info.setStyleSheet(ESTILO_BOTON)
-    
-    
-    btn_unir = QPushButton("Unir PDF")
-    btn_unir.setStyleSheet(ESTILO_BOTON)
-    btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
-
-    btn_extraer_paginas = QPushButton("extraer paginas")
-    btn_extraer_paginas.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
-    btn_extraer_paginas.setStyleSheet(ESTILO_BOTON)
-
-    btn_desbloqueo = QPushButton("Desbloquear PDF")
-    btn_desbloqueo.setStyleSheet(ESTILO_BOTON)
-    btn_desbloqueo.setIcon(QIcon("Assets/Icons/desbloqueo_imagen.png"))
-
-
-    btn_bloqueo = QPushButton("Bloquear PDF")
-    btn_bloqueo.setStyleSheet(ESTILO_BOTON)
-    btn_bloqueo.setIcon(QIcon("Assets/Icons/bloqueo_imagen.png"))
-
-    btn_convertir = QPushButton("Convierte JPG a PDF")
-    btn_convertir.setStyleSheet(ESTILO_BOTON)
-    btn_convertir.setIcon(QIcon("Assets/Icons/imagen_imagen.png"))
-
-
-    btn_convertir_pdf_a_jpg = QPushButton("Convierte PDF a JPG")
-    btn_convertir_pdf_a_jpg.setStyleSheet(ESTILO_BOTON)
-    btn_convertir_pdf_a_jpg.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
-
-    btn_convertirword = QPushButton("Convertir PDF a Word")
-    btn_convertirword.setStyleSheet(ESTILO_BOTON)
-    btn_convertirword.setIcon(QIcon("Assets/Icons/word_imagen.png"))
-
-    btn_convertirw_p = QPushButton("Convertir Word a PDF")
-    btn_convertirw_p.setStyleSheet(ESTILO_BOTON)
-    btn_convertirw_p.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
-
-    btn_extraer_txt_digital = QPushButton("Extraer texto de PDF digital")
-    btn_extraer_txt_digital.setStyleSheet(ESTILO_BOTON)
-    btn_extraer_txt_digital.setIcon(QIcon("Assets/Icons/text_imagen.png"))
-
-    btn_comprimir_pdf = QPushButton("Comprimir PDF")
-    btn_comprimir_pdf.setStyleSheet(ESTILO_BOTON)
-    btn_comprimir_pdf.setIcon(QIcon("Assets/Icons/compresion_imagen.png"))
-
-
-
-    btn_unir.clicked.connect(abrir_unir)
-    btn_extraer_paginas.clicked.connect(abrir_extraer_paginas)
-    btn_desbloqueo.clicked.connect(abrir_desbloqueo)
-    btn_bloqueo.clicked.connect(abrir_bloqueo)
-    btn_convertir.clicked.connect(abrir_convertir)
-    btn_convertirword.clicked.connect(abrir_convertirw_p)
-    btn_convertirw_p.clicked.connect(abrir_convertirword)
-    btn_convertir_pdf_a_jpg.clicked.connect(abrir_convertir_pdf_a_jpg)
-    btn_extraer_txt_digital.clicked.connect(abrir_extraer_txt_digital)
-    btn_comprimir_pdf.clicked.connect(abrir_comprimir_pdf)
-    btn_info.clicked.connect(mostrar_info)
-
-
-    layout_derecho.addWidget(btn_unir)
-    layout_derecho.addWidget(btn_extraer_paginas)
-    layout_derecho.addWidget(btn_desbloqueo)
-    layout_derecho.addWidget(btn_bloqueo)
-    layout_derecho.addWidget(btn_convertir)
-    layout_derecho.addWidget(btn_convertirword)
-    layout_derecho.addWidget(btn_convertirw_p)
-    layout_derecho.addWidget(btn_convertir_pdf_a_jpg)
-    layout_derecho.addWidget(btn_extraer_txt_digital)
-    layout_derecho.addWidget(btn_comprimir_pdf)
-
-    
-    layout_izquierdo.addStretch()
         
-    layout_izquierdo.addWidget(
-        logo,
-        alignment=Qt.AlignmentFlag.AlignCenter
-        )
+        self.setWindowTitle("PDF Tools v1.0")
         
-    layout_izquierdo.addWidget(
-        titulo,
-        alignment=Qt.AlignmentFlag.AlignCenter
-        )
-
-    layout_izquierdo.addWidget(btn_info, 
-    alignment=Qt.AlignmentFlag.AlignCenter)
-        
-    layout_izquierdo.addStretch()
     
 
-    layout_principal = QHBoxLayout()
+        self.setWindowIcon(
+        QIcon("Assets/Icons/pdf_imagen.png"))
 
-    layout_principal.addLayout(layout_izquierdo)
-    layout_principal.addLayout(layout_derecho)
 
-    ventana.setLayout(layout_principal)
+        self.titulo = QLabel("PDF Tools v1.0")
 
-    return ventana
+        self.titulo.setStyleSheet(ESTILO_TITULO)
+
+        self.logo = QLabel()
+
+        self.logo.setPixmap(
+            QPixmap("Assets/Icons/pdf_imagen.png").scaled(160,160))
+
+        self.btn_info = QPushButton("ⓘ")
+        self.btn_info.setStyleSheet(ESTILO_BOTON)
+        
+        
+        self.btn_unir = QPushButton("Unir PDF")
+        self.btn_unir.setStyleSheet(ESTILO_BOTON)
+        self.btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
+
+        self.btn_extraer_paginas = QPushButton("extraer paginas")
+        self.btn_extraer_paginas.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
+        self.btn_extraer_paginas.setStyleSheet(ESTILO_BOTON)
+
+        self.btn_desbloqueo = QPushButton("Desbloquear PDF")
+        self.btn_desbloqueo.setStyleSheet(ESTILO_BOTON)
+        self.btn_desbloqueo.setIcon(QIcon("Assets/Icons/desbloqueo_imagen.png"))
+
+
+        self.btn_bloqueo = QPushButton("Bloquear PDF")
+        self.btn_bloqueo.setStyleSheet(ESTILO_BOTON)
+        self.btn_bloqueo.setIcon(QIcon("Assets/Icons/bloqueo_imagen.png"))
+
+        self.btn_convertir = QPushButton("Convierte JPG a PDF")
+        self.btn_convertir.setStyleSheet(ESTILO_BOTON)
+        self.btn_convertir.setIcon(QIcon("Assets/Icons/imagen_imagen.png"))
+
+
+        self.btn_convertir_pdf_a_jpg = QPushButton("Convierte PDF a JPG")
+        self.btn_convertir_pdf_a_jpg.setStyleSheet(ESTILO_BOTON)
+        self.btn_convertir_pdf_a_jpg.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
+
+        self.btn_convertirword = QPushButton("Convertir PDF a Word")
+        self.btn_convertirword.setStyleSheet(ESTILO_BOTON)
+        self.btn_convertirword.setIcon(QIcon("Assets/Icons/word_imagen.png"))
+
+        self.btn_convertirw_p = QPushButton("Convertir Word a PDF")
+        self.btn_convertirw_p.setStyleSheet(ESTILO_BOTON)
+        self.btn_convertirw_p.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
+
+        self.btn_extraer_txt_digital = QPushButton("Extraer texto de PDF digital")
+        self.btn_extraer_txt_digital.setStyleSheet(ESTILO_BOTON)
+        self.btn_extraer_txt_digital.setIcon(QIcon("Assets/Icons/text_imagen.png"))
+
+        self.btn_comprimir_pdf = QPushButton("Comprimir PDF")
+        self.btn_comprimir_pdf.setStyleSheet(ESTILO_BOTON)
+        self.btn_comprimir_pdf.setIcon(QIcon("Assets/Icons/compresion_imagen.png"))
+
+
+    def crear_layout(self):
+
+        grid = QGridLayout()
+
+        self.layout_izquierdo = QVBoxLayout()
+
+        self.tarjeta_pdf = tarjeta_categoria("📄 Gestión PDF")
+        self.tarjeta_seguridad = tarjeta_categoria("🔒 Seguridad")
+        self.tarjeta_conversion = tarjeta_categoria("🔄 Conversión")
+        self.tarjeta_texto = tarjeta_categoria("📝 Extracción")
+
+
+        grid.addWidget(self.tarjeta_pdf,0, 0)
+
+        grid.addWidget(self.tarjeta_seguridad,0, 1)
+
+        grid.addWidget(self.tarjeta_conversion,1, 0)
+
+        grid.addWidget(self.tarjeta_texto,1, 1)
+
+        ### tarjeta pdf
+
+        self.tarjeta_pdf.layout_botones.addWidget(self.btn_unir)
+
+        self.tarjeta_pdf.layout_botones.addWidget(self.btn_extraer_paginas)
+
+        self.tarjeta_pdf.layout_botones.addWidget(self.btn_comprimir_pdf)
+
+        ### seguridad pdf
+
+        self.tarjeta_seguridad.layout_botones.addWidget(self.btn_bloqueo)
+
+        self.tarjeta_seguridad.layout_botones.addWidget(self.btn_desbloqueo)
+
+        #### conversion pdf
+
+        self.tarjeta_conversion.layout_botones.addWidget(self.btn_convertir)
+
+        self.tarjeta_conversion.layout_botones.addWidget(self.btn_convertir_pdf_a_jpg)
+
+        self.tarjeta_conversion.layout_botones.addWidget(self.btn_convertirword)
+
+        self.tarjeta_conversion.layout_botones.addWidget(self.btn_convertirw_p)
+
+        ### extraccion pdf
+
+        self.tarjeta_texto.layout_botones.addWidget(self.btn_extraer_txt_digital)
+        
+        
+        self.layout_izquierdo.addStretch()
+            
+        self.layout_izquierdo.addWidget(
+            self.logo,
+            alignment=Qt.AlignmentFlag.AlignCenter
+            )
+            
+        self.layout_izquierdo.addWidget(
+            self.titulo,
+            alignment=Qt.AlignmentFlag.AlignCenter
+            )
+
+        self.layout_izquierdo.addWidget(self.btn_info, 
+        alignment=Qt.AlignmentFlag.AlignCenter)
+            
+        self.layout_izquierdo.addStretch()
+        
+
+        layout_principal = QHBoxLayout()
+
+        layout_principal.addLayout(self.layout_izquierdo)
+        layout_principal.addLayout(grid)
+      
+
+        self.setLayout(layout_principal)
+
+        return self
+
+    def conectar_eventos(self):
+
+        self.btn_unir.clicked.connect(lambda: self.abrir_ventana(ventana_unirpdf))
+        self.btn_extraer_paginas.clicked.connect(lambda: self.abrir_ventana(extraerpaginas_ventana))
+        self.btn_desbloqueo.clicked.connect(lambda: self.abrir_ventana(desbloqueo_ventana))
+        self.btn_bloqueo.clicked.connect(lambda: self.abrir_ventana(bloqueo_ventana))
+        self.btn_convertir.clicked.connect(lambda: self.abrir_ventana(funcion_convertirJPG))
+        self.btn_convertirword.clicked.connect(lambda: self.abrir_ventana(convertirword_ventana))
+        self.btn_convertirw_p.clicked.connect(lambda: self.abrir_ventana(convertirword_pdf_ventana))
+        self.btn_convertir_pdf_a_jpg.clicked.connect(lambda: self.abrir_ventana(ventana_convertirPDF_a_JPG))
+        self.btn_extraer_txt_digital.clicked.connect(lambda: self.abrir_ventana(extraer_txt_digital_ventana))
+        self.btn_comprimir_pdf.clicked.connect(lambda: self.abrir_ventana(ventana_compresion_pdf))
+        self.btn_info.clicked.connect(lambda: self.abrir_ventana(self.mostrar_info))
+
+    def abrir_ventana(self, clase):
+
+        self.carga = ventana_carga(
+            "En proceso...")
+
+        self.carga.show()
+
+        self.clase_destino = clase
+
+        QTimer.singleShot(
+            2000,
+            self.abrir_despues)
+
+    def abrir_despues(self):
+
+        self.carga.close()
+
+        self.ventana_hija = self.clase_destino()
+
+        self.ventana_hija.show()
+
+
 
 
 
