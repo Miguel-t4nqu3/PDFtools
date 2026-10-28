@@ -11,7 +11,6 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMessageBox
-from PyQt6.QtCore import QTimer
 
 # importamos las librerias necesarias 
 from UI.unir_pdf_ventana import ventana_unirpdf
@@ -25,8 +24,6 @@ from UI.convertir_pdf_a_jpg_ventana import ventana_convertirPDF_a_JPG
 from UI.extraer_txt_pdf_digital_ventana import extraer_txt_digital_ventana
 from UI.comprimir_pdf_ventana import ventana_compresion_pdf
 from UI.estilos import (ESTILO_VENTANA,ESTILO_BOTON,ESTILO_TITULO)
-from UI.selector_pdf import clase_selector_pdf
-from UI.ventana_carga import ventana_carga
 from UI.tarjeta_menuprincipal import tarjeta_categoria
 
 
@@ -63,68 +60,60 @@ class menu_principal(QWidget):
         self.setStyleSheet(ESTILO_VENTANA)
 
         
-        self.setWindowTitle("PDF Tools v1.0")
+        self.setWindowTitle("PDF Tools")
         
     
 
         self.setWindowIcon(
         QIcon("Assets/Icons/pdf_imagen.png"))
 
+        self.setFixedSize(1000,550)
+        
 
-        self.titulo = QLabel("PDF Tools v1.0")
+        self.titulo = QLabel("PDF Tools")
 
         self.titulo.setStyleSheet(ESTILO_TITULO)
 
         self.logo = QLabel()
 
         self.logo.setPixmap(
-            QPixmap("Assets/Icons/pdf_imagen.png").scaled(160,160))
+            QPixmap("Assets/Icons/pdf_imagen.png").scaled(220,220))
 
-        self.btn_info = QPushButton("ⓘ")
+        self.btn_info = QPushButton("💡")
+        
         self.btn_info.setStyleSheet(ESTILO_BOTON)
         
         
         self.btn_unir = QPushButton("Unir PDF")
         self.btn_unir.setStyleSheet(ESTILO_BOTON)
-        self.btn_unir.setIcon(QIcon("Assets/Icons/unir_imagen.png"))
 
         self.btn_extraer_paginas = QPushButton("extraer paginas")
-        self.btn_extraer_paginas.setIcon(QIcon("Assets/Icons/dividir_imagen.png"))
         self.btn_extraer_paginas.setStyleSheet(ESTILO_BOTON)
 
         self.btn_desbloqueo = QPushButton("Desbloquear PDF")
         self.btn_desbloqueo.setStyleSheet(ESTILO_BOTON)
-        self.btn_desbloqueo.setIcon(QIcon("Assets/Icons/desbloqueo_imagen.png"))
-
 
         self.btn_bloqueo = QPushButton("Bloquear PDF")
         self.btn_bloqueo.setStyleSheet(ESTILO_BOTON)
-        self.btn_bloqueo.setIcon(QIcon("Assets/Icons/bloqueo_imagen.png"))
 
         self.btn_convertir = QPushButton("Convierte JPG a PDF")
         self.btn_convertir.setStyleSheet(ESTILO_BOTON)
-        self.btn_convertir.setIcon(QIcon("Assets/Icons/imagen_imagen.png"))
-
 
         self.btn_convertir_pdf_a_jpg = QPushButton("Convierte PDF a JPG")
         self.btn_convertir_pdf_a_jpg.setStyleSheet(ESTILO_BOTON)
-        self.btn_convertir_pdf_a_jpg.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
 
         self.btn_convertirword = QPushButton("Convertir PDF a Word")
         self.btn_convertirword.setStyleSheet(ESTILO_BOTON)
-        self.btn_convertirword.setIcon(QIcon("Assets/Icons/word_imagen.png"))
 
         self.btn_convertirw_p = QPushButton("Convertir Word a PDF")
         self.btn_convertirw_p.setStyleSheet(ESTILO_BOTON)
-        self.btn_convertirw_p.setIcon(QIcon("Assets/Icons/convertir_imagen.png"))
-
+      
         self.btn_extraer_txt_digital = QPushButton("Extraer texto de PDF digital")
         self.btn_extraer_txt_digital.setStyleSheet(ESTILO_BOTON)
-        self.btn_extraer_txt_digital.setIcon(QIcon("Assets/Icons/text_imagen.png"))
 
         self.btn_comprimir_pdf = QPushButton("Comprimir PDF")
         self.btn_comprimir_pdf.setStyleSheet(ESTILO_BOTON)
-        self.btn_comprimir_pdf.setIcon(QIcon("Assets/Icons/compresion_imagen.png"))
+        
 
 
     def crear_layout(self):
@@ -133,10 +122,10 @@ class menu_principal(QWidget):
 
         self.layout_izquierdo = QVBoxLayout()
 
-        self.tarjeta_pdf = tarjeta_categoria("📄 Gestión PDF")
-        self.tarjeta_seguridad = tarjeta_categoria("🔒 Seguridad")
-        self.tarjeta_conversion = tarjeta_categoria("🔄 Conversión")
-        self.tarjeta_texto = tarjeta_categoria("📝 Extracción")
+        self.tarjeta_pdf = tarjeta_categoria("📄 Gestión PDF", "Assets/gifs/gestion_pdf.gif")
+        self.tarjeta_seguridad = tarjeta_categoria("🔒 Seguridad", "Assets/gifs/seguridad_pdf.gif")
+        self.tarjeta_conversion = tarjeta_categoria("🔄 Conversión", "Assets/gifs/convertir_pdf.gif")
+        self.tarjeta_texto = tarjeta_categoria("📝 Extracción", "Assets/gifs/texto_gif.gif")
 
 
         grid.addWidget(self.tarjeta_pdf,0, 0)
@@ -216,26 +205,12 @@ class menu_principal(QWidget):
         self.btn_convertir_pdf_a_jpg.clicked.connect(lambda: self.abrir_ventana(ventana_convertirPDF_a_JPG))
         self.btn_extraer_txt_digital.clicked.connect(lambda: self.abrir_ventana(extraer_txt_digital_ventana))
         self.btn_comprimir_pdf.clicked.connect(lambda: self.abrir_ventana(ventana_compresion_pdf))
-        self.btn_info.clicked.connect(lambda: self.abrir_ventana(self.mostrar_info))
+        self.btn_info.clicked.connect(self.mostrar_info)
+
 
     def abrir_ventana(self, clase):
 
-        self.carga = ventana_carga(
-            "En proceso...")
-
-        self.carga.show()
-
-        self.clase_destino = clase
-
-        QTimer.singleShot(
-            2000,
-            self.abrir_despues)
-
-    def abrir_despues(self):
-
-        self.carga.close()
-
-        self.ventana_hija = self.clase_destino()
+        self.ventana_hija = clase()
 
         self.ventana_hija.show()
 

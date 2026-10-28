@@ -34,7 +34,7 @@ QPushButton:hover{
 # =========================
 
 ESTILO_TITULO = """
-font-size: 40px;
+font-size: 60px;
 font-weight: bold;
 color: #A855F7;
 """

@@ -28,9 +28,10 @@ class ventana_carga(QDialog):
         self.setStyleSheet(ESTILO_VENTANA)
         self.setWindowTitle("PDF Tools Cargando ...")
         self.setWindowIcon(QIcon("Assets/Icons/pdf_imagen.png"))
+        self.setFixedSize(500,300)
 
         self.label_texto = QLabel(self.mensaje)
-        self.label_info = QLabel("Estamos preparando todo")
+        self.label_info = QLabel("Estamos preparando todo ...")
         self.label_info.setStyleSheet(ESTILO_SUBTITULO)
         self.label_texto.setStyleSheet(ESTILO_SUBTITULO)
 

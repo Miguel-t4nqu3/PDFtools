@@ -1,27 +1,27 @@
-import sys
+
 from PyQt6.QtWidgets import (
 QWidget,
 QPushButton,
 QLabel,
 QVBoxLayout,
-QHBoxLayout,
 QFrame
 )
-from PyQt6.QtGui import QIcon
-from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMessageBox
-from PyQt6.QtCore import QTimer
-from UI.estilos import ESTILO_BOTON, ESTILO_SUBTITULO, ESTILO_TARJETA
+from PyQt6.QtGui import QMovie
+from PyQt6.QtWidgets import QLabel
+from UI.estilos import ESTILO_BOTON, ESTILO_TARJETA
 
 
 class tarjeta_categoria(QFrame):
 
-    def __init__(self, titulo):
+    def __init__(self, titulo, ruta_gif):
         super().__init__()
 
         self.titulo = titulo
+        self.ruta_gif = ruta_gif
         self.desplegado = False
+
+
         self.crear_widgets()
         self.crear_layout()
         self.conexion_boton()
@@ -32,6 +32,15 @@ class tarjeta_categoria(QFrame):
         self.setStyleSheet(ESTILO_TARJETA)
 
         self.setFixedSize(280,250)
+
+        self.gif_label = QLabel()
+
+        self.movie = QMovie(self.ruta_gif)
+        print(self.movie.isValid())
+
+        self.gif_label.setMovie(self.movie)
+
+        self.movie.start()
 
         self.boton_titulo = QPushButton(f"▶ {self.titulo}")
 
@@ -48,11 +57,11 @@ class tarjeta_categoria(QFrame):
 
         layout_principal = QVBoxLayout()
 
+        layout_principal.addWidget(self.gif_label,alignment=Qt.AlignmentFlag.AlignCenter)
+
         layout_principal.addWidget(self.boton_titulo)
 
         layout_principal.addWidget(self.contenedor_botones)
-
-        layout_principal.addLayout(self.layout_botones)
 
         self.setLayout(layout_principal)
 
@@ -62,16 +71,23 @@ class tarjeta_categoria(QFrame):
 
         if self.desplegado:
 
-            self.contenedor_botones.hide()
+            self.gif_label.hide()
 
-            self.boton_titulo.setText(f"▶ {self.titulo}")    
+            self.contenedor_botones.show()
+
+            self.boton_titulo.setText(
+                f"▼ {self.titulo}"
+            )
 
         else:
 
+            self.gif_label.show()
 
-            self.boton_titulo.setText(f"▼ {self.titulo}")
+            self.contenedor_botones.hide()
 
-            self.contenedor_botones.show()
+            self.boton_titulo.setText(
+                f"▶ {self.titulo}"
+            )
 
 
     def conexion_boton(self):

@@ -1,33 +1,33 @@
 from PyQt6.QtWidgets import (
-    QWidget,
     QLabel,
-    QPushButton,
     QVBoxLayout,
-    QGridLayout,
-    QScrollArea,
-    QHBoxLayout
+ 
 )
-from PyQt6.QtGui import QPixmap
+
 from PyQt6.QtWidgets import QFrame, QLabel, QVBoxLayout
 from PyQt6.QtCore import Qt
-import pymupdf
 import os
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QFileDialog
 import os
 from UI.estilos import ESTILO_NORMAL,ESTILO_ACTIVO,ESTILO_VENTANA,ESTILO_SUBTITULO,LETRA_INFO,ESTILO_FALLO,ESTILO_EXITO,ESTILO_ADVERTENCIA
 from PyQt6.QtGui import QMovie
+from PyQt6.QtCore import pyqtSignal
 
 
 class clase_selector_pdf(QFrame):
+
+            archivos_cargados = pyqtSignal()
     
-            def __init__(self ):
+            def __init__(self, multiples = False ):
                 super().__init__()
 
-                self.ruta_pdf = ""
+                self.multiples = multiples
+                self.archivos = []
                 self.archivo_cargado = False
                 self.activo = False
                 self.gif_label = QLabel()
+                
 
                 
                 self.setAcceptDrops(True)
@@ -36,17 +36,44 @@ class clase_selector_pdf(QFrame):
                 
 
             def seleccionar_pdf(self):
-                archivo, _ = QFileDialog.getOpenFileName(
+
+                if self.multiples: 
+
+                    archivos, _ = QFileDialog.getOpenFileNames(
                         self,
-                        "Seleccionar PDF",
+                        "Seleccionar PDFs",
                         "",
                         "PDF (*.pdf)")
 
-                if archivo:
-                    self.ruta_pdf = archivo
-                    nombre = os.path.basename(archivo)
-                    self.mostrar_exito(f"✅ {nombre}")
+                    if not archivos:
+                        return
+
+                    if len(archivos) == 1:
+
+                        self.mostrar_advertencia("⚠️ Debes cargar almenos 2 archivos")
+                        return
+                        
+                    self.archivos = archivos
+                    self.mostrar_exito(f"✅ {len(self.archivos)} archivos cargados")
+                    self.archivos_cargados.emit()
                     print("funcionando carga ")
+
+                else:
+                    archivo, _ = QFileDialog.getOpenFileName(
+                            self,
+                            "Seleccionar PDF",
+                            "",
+                            "PDF (*.pdf)")
+
+                    if not archivo:
+                        return
+
+                    if archivo:
+                        self.archivos = [archivo]
+                        nombre = os.path.basename(archivo)
+                        self.mostrar_exito(f"✅ {nombre}")
+                        self.archivos_cargados.emit()
+                        print("funcionando carga ")
                         
                   
 
@@ -158,26 +185,60 @@ class clase_selector_pdf(QFrame):
                 self.drop_area.setStyleSheet(ESTILO_NORMAL)
 
                 archivos = event.mimeData().urls()
-                if  len(archivos) > 1:
 
-                    self.mostrar_advertencia("⚠️ solo es posible cargar un documento")
+                if self.multiples:
+
+                    self.archivos = []
+
+                    for archivo in archivos:
+
+                        ruta = archivo.toLocalFile()
+
+                        if not ruta.lower().endswith(".pdf"):
+
+                            self.mostrar_error("❌ No es un archivo PDF")
+                            return
+
+                        self.archivos.append(ruta)
+
+                    if len(archivos) <2:
+                                                                        
+                        self.mostrar_advertencia("⚠️ Debes cargar almenos 2 archivos")
+                        return
+
+                    self.mostrar_exito(f"✅ {len(self.archivos)} archivos cargados")
+                    self.archivos_cargados.emit()
+
+                    print(self.archivos)
+
                     return
+                        
+                
+                            
+                else:
+
+                    archivos = event.mimeData().urls()
+                    if  len(archivos) > 1:
+
+                        self.mostrar_advertencia("⚠️ solo es posible cargar un documento")
+                        return
 
                 archivo = archivos[0].toLocalFile()
                      
                 if archivo.lower().endswith(".pdf"):
 
-                    self.ruta_pdf = archivo
+                    self.archivos = archivo
                     self.drop_area.setStyleSheet(ESTILO_NORMAL)
                     nombre = os.path.basename(archivo)
                     self.mostrar_exito(f"✅ {nombre}")
+                    self.archivos_cargados.emit()
 
-                    print(archivo)
-
-                    
+                    print(archivo)      
                     
                 else:
                     self.mostrar_error("❌ No es un archivo PDF")
+
+
                     
 
             
