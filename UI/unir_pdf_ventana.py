@@ -15,6 +15,9 @@ from PyQt6.QtWidgets import QMessageBox
 from UI.selector_pdf import clase_selector_pdf
 from UI.confirmacion import confirmacion
 from Services.unir_PDF import unir_PDFs
+from UI.ventana_carga import ventana_carga
+from UI.descarga_pdf import descargas
+from PyQt6.QtCore import QTimer
 
 
 
@@ -24,6 +27,7 @@ class ventana_unirpdf(QWidget):
         super().__init__()
 
         self.selector_pdf = clase_selector_pdf(multiples= True)
+      
 
         self.confirmacion = confirmacion("")
         self.confirmacion.hide()
@@ -73,7 +77,47 @@ class ventana_unirpdf(QWidget):
 
     def procesamiento_pdf(self):
 
-        self.procesar = unir_PDFs(self.selector_pdf.archivos, ruta_salida)
+        self.descarga = descargas(
+        "PDF unido correctamente")
+
+        ruta_salida = self.descarga.guardar_archivo()
+
+        if not ruta_salida:
+            return
+
+        self.confirmacion.hide()
+
+        self.ventana_carga = ventana_carga(
+        "Procesando archivos...")
+
+        self.ventana_carga.show()
+
+        self.ruta_salida = ruta_salida
+
+        QTimer.singleShot(
+        2000,
+        self.finalizar_proceso)
+
+        
+
+    def finalizar_proceso(self):
+
+        unir_PDFs(
+            self.selector_pdf.archivos,
+            self.ruta_salida
+        )
+
+        self.ventana_carga.hide()
+
+        self.descarga.show()
+
+        self.close()
+
+         
+    
+
+
+        
 
 
 
