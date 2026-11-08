@@ -1,11 +1,10 @@
-from paddleocr import PaddleOCR
-from Services.extraer_txt_ocr import OCRword
 
-ocr = PaddleOCR(
-    use_angle_cls=True,
-    lang="es"
-)
+from extraer_txt_ocr import OCRword
 
-resultado = OCRword(r"C:\Users\mcastiblancor\Downloads\escaneo_mcastiblancor_2026-11-05-11-00-42.pdf", 
-                    r"C:\Users\mcastiblancor\Downloads\escaneo_mcastiblancor_2026-11-05-11-00-42.txt")
+resultado = OCRword("C:/Users/CUERVO_NEGRO2/Downloads/ACTA_ACRISTANCHOQ_10.pdf", "C:/Users/CUERVO_NEGRO2/Downloads/ACTA_ACRISTANCHOQ_10.docx")
+
+resultado.procesar()
+
+
+
 

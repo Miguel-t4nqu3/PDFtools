@@ -1,6 +1,7 @@
 import pymupdf
 from pathlib import Path
 from docx import Document
+from paddleocr import PaddleOCR
 
 class OCRword:
 
@@ -11,6 +12,9 @@ class OCRword:
         self.resultados_ocr = []
         self.path = Path("temp")
         self.path.mkdir(exist_ok=True)
+        self.ocr = PaddleOCR(
+        use_angle_cls=True,
+        lang="es")
 
     def pdf_a_imagenes(self):
 
@@ -31,6 +35,7 @@ class OCRword:
                 str(imagen),
                 cls=True
             )
+            
 
             for linea in resultado[0]:
                 texto = linea[1][0]
@@ -53,15 +58,20 @@ class OCRword:
 
         print(f"✅ El archivo Word se ha creado correctamente en: {self.salida}")
 
-        return true
-            
+        return True
+
+    def limpiar_temporales(self):
+
+        for imagen in self.imagenes:
+            if imagen.exists():
+                imagen.unlink()
 
 
-
-    # def procesar(self):
-    #     self.pdf_a_imagenes()
-    #     self.ejecutar_ocr()
-    #     self.crear_word()
+    def procesar(self):
+        self.pdf_a_imagenes()
+        self.ejecutar_ocr()
+        self.crear_word()
+        self.limpiar_temporales()
 
     
 
