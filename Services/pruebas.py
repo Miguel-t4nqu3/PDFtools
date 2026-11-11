@@ -1,7 +1,8 @@
 
 from extraer_txt_ocr import OCRword
 
-resultado = OCRword("C:/Users/CUERVO_NEGRO2/Downloads/ACTA_ACRISTANCHOQ_10.pdf", "C:/Users/CUERVO_NEGRO2/Downloads/ACTA_ACRISTANCHOQ_10.docx")
+resultado = OCRword(r"C:\Users\mcastiblancor\OneDrive - Indra\Documentos\ACTAS_ENTREGA\ACTA_ZTORRES_DEVOLUCION.pdf", 
+                    r"C:\Users\mcastiblancor\OneDrive - Indra\Documentos\ACTAS_ENTREGA\ACTA_ZTORRES_DEVOLUCION.docx")
 
 resultado.procesar()
 
