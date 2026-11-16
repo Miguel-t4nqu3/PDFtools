@@ -125,10 +125,10 @@ class OCRword:
                     and texto_fila
                     and len(texto_fila)< 50
                     and(texto_fila.isupper()
-                        or texto_fila.startswith("1. ")
-                        or texto_fila.startswith("2. ")
-                        or texto_fila.startswith("3. ")
-                        or texto_fila.startswith("4. "))):
+                        or texto_fila.startswith("1.")
+                        or texto_fila.startswith("2.")
+                        or texto_fila.startswith("3.")
+                        or texto_fila.startswith("4."))):
                         tipo = "titulo"
 
                 elif len(fila) >= 3:
@@ -142,7 +142,14 @@ class OCRword:
 
                 bloque = {"texto": texto_fila,
                                      "columnas": len(fila),
-                                     "celdas": [item["texto"]for item in fila],
+                                     "celdas": [
+                                         {"texto": item["texto"],
+                                          "x": item["x"],
+                                          "y": item["y"],
+                                          "ancho": item["ancho"],
+                                          "alto": item["alto"] }
+                                         
+                                        for item in fila],
                                      "alto": alto_max,
                                      "tipo": tipo}
                 if "ouensn" in texto_fila:
@@ -168,12 +175,7 @@ class OCRword:
         documento = Document()
 
         tabla_actual = None
-
-        print(
-            "TABLA:",
-            len(bloque["celdas"]),
-            bloque["texto"]
-                            )
+        columnas_actual = 0
 
         for bloque in self.bloques:
             if bloque["tipo"] == "titulo":
@@ -193,11 +195,25 @@ class OCRword:
                 for i, celda in enumerate(
                     bloque["celdas"]
                 ):
-                    fila[i].text = celda.strip()
+                    fila[i].text = celda["texto"].strip()
 
             elif bloque["tipo"] == "tabla":
 
-                if tabla_actual is None:
+                print(
+                        "\nTABLA DETECTADA")
+
+                print(
+                    "Columnas:",
+                    len(bloque["celdas"])
+                )
+
+                print(
+                    bloque["celdas"]
+                )
+
+
+                if(tabla_actual is None 
+                   or columnas_actual != len(bloque["celdas"])):
 
                     tabla_actual = documento.add_table(
                         rows=0,
@@ -206,13 +222,15 @@ class OCRword:
 
                     tabla_actual.style = "Table Grid"
 
+                    columnas_actual = len(bloque["celdas"])
+
                 fila = tabla_actual.add_row().cells
 
                 for i, celda in enumerate(
                     bloque["celdas"]
                 ):
 
-                    fila[i].text = celda.strip()
+                    fila[i].text = celda["texto"].strip()
 
             else:
                 tabla_actual = None
