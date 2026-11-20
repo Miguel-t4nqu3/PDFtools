@@ -18,3 +18,22 @@ venv/
 # Windows
 Thumbs.db
 Desktop.ini
+
+# Entorno virtual
+venv/
+
+# Caché de Python
+__pycache__/
+*.pyc
+
+# Archivos temporales OCR
+temp/
+
+# Configuración de VS Code
+.vscode/
+
+# Archivos generados
+*.log
+
+# Resultados temporales
+*.tmp

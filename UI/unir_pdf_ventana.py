@@ -9,9 +9,7 @@ QHBoxLayout
 from Services.unir_PDF import unir_PDFs
 from UI.estilos import (ESTILO_BOTON,ESTILO_SUBTITULO,ESTILO_TITULO,ESTILO_VENTANA)
 from PyQt6.QtGui import QIcon
-from PyQt6.QtGui import QIcon, QPixmap
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtGui import QIcon
 from UI.selector_pdf import clase_selector_pdf
 from UI.confirmacion import confirmacion
 from Services.unir_PDF import unir_PDFs
